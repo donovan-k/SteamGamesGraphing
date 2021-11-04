@@ -39,4 +39,4 @@ to entire group. If conflicts are still not resolved, then the winner will be de
 by coin or dice depending on how many sides their are.
 
 ### Signatures
-
+dkitten2, 
