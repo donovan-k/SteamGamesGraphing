@@ -3,7 +3,7 @@
 ## Team Contract (dkitten2, pganot2, jmliao2, shackma2)
 
 ### Communication
-1. Team Meetings: Our team will meet once a week every ___ from __ to __ at __.
+1. Team Meetings: Our team will meet once a week every Wednesday from 5 pm to 6 pm on Discord or Zoom.
 We can collaboratively add notes and todos on a Google Document every week to 
 point us in the direction for the week. We will designate a different person every week to
 draft the weekly DEVELOPMENT LOG entry which will be overlooked by the group. 
@@ -41,4 +41,3 @@ by coin or dice depending on how many sides their are.
 ### Signatures
 Donovan Kitten (dkitten2), 
 PJ Ganotisi (pganot2),
-Alex Liao (jmliao2),
