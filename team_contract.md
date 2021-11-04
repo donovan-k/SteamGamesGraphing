@@ -29,12 +29,10 @@ independently work no less than 2 hours and no more than 6 hours per week on the
 If the workload is more than the team will divide up the work fairly. It is the team's 
 responsibility, not any individual's responsibility, to make sure a weekly deliverable
 is finished by the end of the week. 
-
-However, if a member of the team is constantly 
-ignoring or not finishing deliverables, then as a team we will listen to explainations. 
-If understandable, they can deliver more work than others on the next week to make up
-for unfinished work. If behavior is continued, then further action such as alerting staff
-members will be taken.
+However, if a member of the team is constantly ignoring or not finishing deliverables, 
+then as a team we will listen to explainations. If understandable, they can deliver more 
+work than others on the next week to make up for unfinished work. If behavior is continued,
+then further action such as alerting staff members will be taken.
 
 3. Conflict Resolution: All conflicts will try to be resolved by expaining both sides 
 to entire group. If conflicts are still not resolved, then the winner will be decided
