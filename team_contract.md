@@ -1,6 +1,6 @@
 ## CS 225 Data Structures
 
-## Team Contract (dkitten2, other, other, other)
+## Team Contract (dkitten2, pganot2, jmliao2, shackma2)
 
 ### Communication
 1. Team Meetings: Our team will meet once a week every ___ from __ to __ at __.
