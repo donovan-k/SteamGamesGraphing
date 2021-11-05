@@ -42,4 +42,4 @@ by coin or dice depending on how many sides their are.
 PJ Ganotisi (pganot2),
 Alex Liao (jmliao2),
 Donovan Kitten (dkitten2),
-Stan Hackman (shackma2),
+Stan Hackman (shackma2)
