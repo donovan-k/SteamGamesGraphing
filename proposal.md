@@ -40,10 +40,9 @@ Data portions with items missing or which have been identified to be wrong will 
 
 ## Graph Algorithms
 At least two graph data algorithms and a graph traversal from the list of example goals, OR equivalent work.
-BFS - documentation, possible alt implementations and complexity
-Strongly (or almost) connected components - documentation, possible alt implementations and complexity
-Force Directed Graphing - documentation, possible alt implementations and complexity
-Documentation for each method, including alternative implementations, time and space complexity.
+BFS - BFS is a search where all nodes in a given 'layer' are searched before moving to the next 'layer.' It takes a graph as input, and will output nodes. BFS can have O(V+E) time complexity, where V is the number of vertices and E is the number of edges, and space complexity O(V).
+Strongly (or almost) connected components - Performs a search, reverses the graph, and reperforms a search to determine which components are strongly connected. Takes a graph as input and outputs a strongly connected graph. Strongly connected components have, ideally, O(V+E) time complexity as well.
+Force Directed Graphing - Force Directed Graphing receives data, and uses it to generate visually appealing graphs. The ideal time complexity for Force Directed Graphing should also be O(V+E).
 https://docs.google.com/document/d/10VL05FxUCQZMLb_jQfsfOMNR56ecxy0aIaqPH6KumBQ/edit?usp=sharing
 
 
@@ -51,13 +50,13 @@ https://docs.google.com/document/d/10VL05FxUCQZMLb_jQfsfOMNR56ecxy0aIaqPH6KumBQ/
 Identify a list of tasks ( data acquisition, data processing, individual algorithm completion, final deliverable production
 Make a timeline using the above. 
 Tentative thoughts
-	Data acquistion/processing-
+	Data acquistion/processing- Completed at least by the end of the first week
 	Algorithms and functionality-
-		BFS-
-		Strongly Connected Components-
-		Force Directed Graphing-
-		GUI learn/creation-
-	Final deliverable completion date-
+		BFS- Estimated completion by end of second week.
+		Strongly Connected Components- Estimated completion by end of second week.
+		Force Directed Graphing- Estimated completion by end of third week.
+		GUI learn/creation- Learn things over first two weeks, creation to be decided.
+	Final deliverable completion date- Completed by end of fourth week.
 
 
 ## Discarded
