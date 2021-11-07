@@ -6,8 +6,8 @@
 
 Use steam game text description and tags to recommend similar games.
 Network of similar games based on tags, descriptions, genres…
-What games are on sale
-What games are highest rated for their category
+What games are on sale?
+What games are highest rated for their category?
 Basically a worse steam client.
 
 ## IMPORTANT
@@ -30,11 +30,11 @@ Implement a GUI to inspect the graph and find similar games. We could have a use
 	An app capable of exploring related games from Steam graphically, through organization of similar tags, descriptions and (possibly) ratings.
 Dataset Acquisition and Processing
 At least one public dataset.
-Using either https://www.kaggle.com/trolukovich/steam-games-complete-dataset or https://steamcommunity.com/dev
+Using either https://www.kaggle.com/trolukovich/steam-games-complete-dataset or https://steamcommunity.com/dev.
 Describe how to acquire, store, and process data. 
-We can use python (pandas) to clean and combine all the data into a csv file or similar format
+We can use python (pandas) to clean and combine all the data into a csv file or similar format.
 Describe format and how it will be used in graph structures.
-Each node will be an individual game and 2 nodes will have an edge between them if they are “similar”
+Each node will be an individual game and 2 nodes will have an edge between them if they are “similar”.
 Describe how to deal with errors.
 Data portions with items missing or which have been identified to be wrong will be removed from the set.
 
@@ -49,14 +49,14 @@ https://docs.google.com/document/d/10VL05FxUCQZMLb_jQfsfOMNR56ecxy0aIaqPH6KumBQ/
 ## Timeline 
 Identify a list of tasks ( data acquisition, data processing, individual algorithm completion, final deliverable production
 Make a timeline using the above. 
-Tentative thoughts
-	Data acquistion/processing- Completed at least by the end of the first week
-	Algorithms and functionality-
-		BFS- Estimated completion by end of second week.
-		Strongly Connected Components- Estimated completion by end of second week.
-		Force Directed Graphing- Estimated completion by end of third week.
-		GUI learn/creation- Learn things over first two weeks, creation to be decided.
-	Final deliverable completion date- Completed by end of fourth week.
+Tentative thoughts:
+Data acquistion/processing- Completed at least by the end of the first week
+> Algorithms and functionality-
+>	* BFS- Estimated completion by end of second week.
+>	* Strongly Connected Components- Estimated completion by end of second week.
+>	* Force Directed Graphing- Estimated completion by end of third week.
+>	* GUI learn/creation- Learn things over first two weeks, creation to be decided.
+>Final deliverable completion date- Completed by end of fourth week.
 
 
 ## Discarded
