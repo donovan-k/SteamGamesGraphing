@@ -19,13 +19,10 @@ Implement a GUI to inspect the graph and find similar games. We could have a use
 ## What is a successful project?
 An app capable of exploring related games from Steam graphically, through organization of similar tags, descriptions and (possibly) ratings.
 Dataset Acquisition and Processing
-At least one public dataset.
-Using either https://www.kaggle.com/trolukovich/steam-games-complete-dataset or https://steamcommunity.com/dev.
-Describe how to acquire, store, and process data. 
+
+We will be using either https://www.kaggle.com/trolukovich/steam-games-complete-dataset and/or https://steamcommunity.com/dev.
 We can use python (pandas) to clean and combine all the data into a csv file or similar format.
-Describe format and how it will be used in graph structures.
 Each node will be an individual game and 2 nodes will have an edge between them if they are “similar”.
-Describe how to deal with errors.
 Data portions with items missing or which have been identified to be wrong will be removed from the set.
 
 ## Graph Algorithms
