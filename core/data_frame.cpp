@@ -3,58 +3,61 @@
 using std::cout;
 using std::endl;
 
-DataFrame::DataFrame(std::string filename, int n_rows, bool has_col_names) {
+DataFrame::DataFrame(std::string filename, int n_rows) {
     n_rows_ = n_rows;
     filename_ = filename;
-    createStringValues(has_col_names);
+    createStringValues();
 }
 
-void DataFrame::createStringValues(bool has_col_names) {
+void DataFrame::createStringValues() {
     // read in file, return when invalid
     std::ifstream in(filename_);
     if (in.fail()) return;
 
-    // read first row as the column names
-    if (in.good() && has_col_names) {
-        column_names_ = csv_read_row(in, ',');
-
-        // initialize map keys/columns to empty vectors
-        for (auto col : column_names_) {
-            string_values_[col] = vector<string>();
-        }
-    }
-
-    int counter = 0; // counter for reading only n_rows_
+    // rows to read (if default(0) then read all)
     if (n_rows_ == 0) {
         n_rows_ = INT32_MAX;
     }
 
-    // read rest of file row by row
-    while (in.good() && counter < n_rows_) {
-        vector<string> row = csv_read_row(in, ',');
+    // read file row by row
+    int counter = 0;
+    while(in.good() && counter < n_rows_)
+    {
+        std::vector<std::string> row = csv_read_row(in, ',');
+        cout << "good" << endl;
 
-        // put the row values in the correct column
-        for (size_t i = 0; i < column_names_.size(); i++) {
+        // initialize column values when reading the first row
+        if (counter == 0) {
+            column_names_ = row;
+            for (auto col : column_names_) {
+                string_values_[col] = vector<string>();
+            }
+            counter++;
+            continue;   
+        }
+
+        // set the correct row and column index to the correct key in string values
+        for (size_t i = 0; i < row.size(); i++) {
             string_values_[column_names_[i]].push_back(row[i]);
         }
+
+        // increment counter
+        counter++;
     }
 
-    // increment counter
-    counter++;
+    // close file
+    in.close();
 }
 
-vector<string> DataFrame::csv_read_row(string &line, char delimiter) {
-    std::stringstream ss(line);
-    return csv_read_row(ss, delimiter);
-}
-
-vector<string> DataFrame::csv_read_row(istream &in, char delimiter) {
+std::vector<std::string> DataFrame::csv_read_row(std::istream &in, char delimiter)
+{
     std::stringstream ss;
     bool inquotes = false;
     std::vector<std::string> row;//relying on RVO
     while(in.good())
     {
         char c = in.get();
+        cout << c << " " << std::flush;
         if (!inquotes && c=='"') //beginquotechar
         {
             inquotes=true;

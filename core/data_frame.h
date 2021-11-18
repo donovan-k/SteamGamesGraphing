@@ -18,7 +18,7 @@ class DataFrame {
     /**
      * Constructor for creating a dataframe out of a csv file
     */
-    DataFrame(std::string filename, int n_rows, bool has_col_names);
+    DataFrame(std::string filename, int n_rows=0);
 
     map<string, vector<float>> numeric_values_;
     map<string, vector<string>> string_values_;
@@ -35,19 +35,10 @@ class DataFrame {
      * (calls csv read row function)
      * 
      */
-    void createStringValues(bool has_col_names);
+    void createStringValues();
 
     /** @brief function from http://www.zedwood.com/article/cpp-csv-parser
      * used for reading a line from a csv file
-     * 
-     * @param line specific line of file to read
-     * @param delimiter separator between values in line
-     * @return vector<string> vector of row values of line
-     */
-    vector<string> csv_read_row(string &line, char delimiter);
-
-    /**
-     * @brief read documentation above
      * 
      * @param line specific line of file to read
      * @param delimiter separator between values in line
