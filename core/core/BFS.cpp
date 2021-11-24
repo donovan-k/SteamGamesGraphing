@@ -5,7 +5,7 @@ Graph::Graph(int vertex){
   al = new list<int>[vertex];//creates a new adjacency list
 }
 void Graph::addEdge(int v, int w){
-  adj[v].push_back(w);//adds edge by adding something to the al
+  al[v].push_back(w);//adds edge by adding something to the al
 }
 void Graph::BFS(int s){//visits each vertex
   bool *wasVisited = new bool[vertex];//makes pointer to an array keeping track of whether or not the node has been checked
