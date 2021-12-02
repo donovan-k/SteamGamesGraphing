@@ -14,6 +14,7 @@ class Similar {
   public:
     /** 
      * function for comparing two games to see if they are similar
+     * tolerance should be between 0 and 1 and the higher it is the less likely two games will be similar
      */
     static bool areSimilar(const Game& game1, const Game& game2, double tolerance) {
         // getting the categories used for comparing
@@ -32,7 +33,7 @@ class Similar {
             similar_score += compareTokens(token1, token2);
         }
 
-        return (similar_score / n_tags) < tolerance;
+        return (similar_score / n_tags) > tolerance;
     }
 
     static vector<string> getToken(string str, char delimiter) {
