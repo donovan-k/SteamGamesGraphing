@@ -1,2 +1,2 @@
-steamer.out: src/main.cc src/game.h
-	$(CXX) $(CXXFLAGS) -o ./steamer.out src/main.cc
+steamer.out: src/*
+	$(CXX) $(CXXFLAGS) -o ./steamer.out src/**.cc
