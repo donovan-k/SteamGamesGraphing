@@ -7,8 +7,9 @@
 #include "csv.h"
 
 std::string lex_token_string(std::deque<char>& buffer) {
-  std::deque<char> result = lex_token(buffer);
-  return {result.begin(), result.end()};
+  std::deque<char> output;
+  lex_token(buffer, output);
+  return {output.begin(), output.end()};
 }
 
 int main(int argc, char* argv[]) {
@@ -23,7 +24,7 @@ int main(int argc, char* argv[]) {
         "' for reading: No such file or directory\n";
       abort();
     }
-    getline(fin, line); // skip header line
+    getline(fin, line);
     while (getline(fin, line)) {
       std::deque<char> buffer(line.begin(), line.end());
       game.url = lex_token_string(buffer);
@@ -52,6 +53,6 @@ int main(int argc, char* argv[]) {
 
   std::cout << "We have " << games.size() << " games in total!\n";
   for (const Game& game : games) {
-    std::cout << game.name << ": " << game.desc_snippet << "\n";
+    std::cout << game.name << ": " << game.popular_tags << "\n";
   }
 }
