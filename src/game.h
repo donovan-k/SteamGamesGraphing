@@ -1,3 +1,6 @@
+#ifndef GAME_H
+#define GAME_H
+
 #include <string>
 
 struct Game {
@@ -22,3 +25,5 @@ struct Game {
   std::string original_price;
   std::string discount_price;
 };
+
+#endif // GAME_H
