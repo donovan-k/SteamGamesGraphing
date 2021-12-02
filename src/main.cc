@@ -1,13 +1,11 @@
 #include <fstream>
 #include <iostream>
-#include <deque>
 #include <string>
 #include <vector>
 
 #include "game.h"
 #include "csv.h"
 
-std::string lex_token_string(std::deque<char>& buffer);
 std::string lex_token_string(std::deque<char>& buffer) {
   std::deque<char> result = lex_token(buffer);
   return {result.begin(), result.end()};
