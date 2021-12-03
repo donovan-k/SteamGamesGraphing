@@ -11,4 +11,5 @@
 
 ### Week 3
 - Began on Strongly Connected Components code to group together games that are "similar" (PJ)
-- Implement correct CSV parsing, including strings and escape characters (ALex Liao)
+- Implement correct CSV parsing, including strings and escape characters (Alex Liao)
+- Set things up for writing and running tests (Alex Liao)
