@@ -14,3 +14,5 @@
 - Began on Strongly Connected Components code to group together games that are "similar" (PJ)
 - Implement correct CSV parsing, including strings and escape characters (Alex Liao)
 - Set things up for writing and running tests (Alex Liao)
+- Get testing done for similarity (Donovan)
+- Get testing done for SCC (PJ)
