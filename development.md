@@ -7,6 +7,7 @@
 
 ### Week 2
 - Began on Strongly Connected Components code to group together games that are "similar" (PJ)
+- Implement correct CSV parsing (Jiang Meng Liao), including strings and escape characters
 
 
 ### Week 3
