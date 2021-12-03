@@ -1,2 +1,2 @@
 steamer.out: src/*
-	$(CXX) $(CXXFLAGS) -o ./steamer.out src/**.cc
+	$(CXX) $(CXXFLAGS) -o ./steamer.out src/*.cc
