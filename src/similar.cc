@@ -10,19 +10,12 @@ bool Similar::areSimilar(const Game& game1, const Game& game2, double tolerance)
     vector<string> compare_string2 = {game2.popular_tags, game2.game_details, game2.genre, game2.game_description};
     size_t n_tags = compare_string1.size();
 
-    std::cout << game2.popular_tags << std::endl;
-    // std::cout << game2.game_details << std::endl;
-    // std::cout << game2.genre << std::endl;
-    // std::cout << game2.game_description << std::endl;
-    std::cout << std::endl;
-    std::cout << std::endl;
-
     // setting the delimiter for each category
     vector<char> delimiters = {',', ',', ',', ' '};
 
     // compare the strings of each category
     double similar_score = 0.0;
-    for (size_t i = 0; i < 1; i++) {
+    for (size_t i = 0; i < n_tags; i++) {
         vector<string> token1 = getToken(compare_string1[i], delimiters[i]);
         vector<string> token2 = getToken(compare_string2[i], delimiters[i]);
         similar_score += compareTokens(token1, token2);

@@ -1,46 +1,56 @@
 #include "csv.h"
 
-std::deque<char> lex_token(std::deque<char>& buffer) {
+void lex_token(std::deque<char>& buffer, std::deque<char>& output) {
   if (buffer.empty()) {
-    return {};
+    return;
   }
+
   const char c = buffer.front();
   buffer.pop_front();
+
   if (c == ',') {
-    return {};
-  } else if (c == '"') {
-    return lex_string(buffer);
-  } else {
-    std::deque<char> result = lex_token(buffer);
-    result.push_front(c);
-    return result;
+    return;
   }
-}
 
-std::deque<char> lex_string(std::deque<char>& buffer) {
-  if (buffer.empty()) {
-    return {}; // TODO return error
-  }
-  const char c = buffer.front();
-  buffer.pop_front();
   if (c == '"') {
-    return {};
-  } else if (c == '\\') {
-    return lex_escape(buffer);
-  } else {
-    std::deque<char> result = lex_string(buffer);
-    result.push_front(c);
-    return result;
+    lex_string(buffer, output);
+    lex_token(buffer, output);
+    return;
   }
+
+  output.push_back(c);
+  lex_token(buffer, output);
 }
 
-std::deque<char> lex_escape(std::deque<char>& buffer) {
+void lex_string(std::deque<char>& buffer, std::deque<char>& output) {
   if (buffer.empty()) {
-    return {}; // TODO return error
+    return;
   }
+
   const char c = buffer.front();
   buffer.pop_front();
-  std::deque<char> result;
-  result.push_front(c);
-  return result;
+
+  if (c == '"') {
+    return;
+  }
+
+  if (c == '\\') {
+    lex_escape(buffer, output);
+    lex_string(buffer, output);
+    return;
+  }
+
+  output.push_back(c);
+  lex_string(buffer, output);
+}
+
+void lex_escape(std::deque<char>& buffer, std::deque<char>& output) {
+  if (buffer.empty()) {
+    return;
+  }
+
+  const char c = buffer.front();
+  buffer.pop_front();
+
+  output.push_front(c);
 }
