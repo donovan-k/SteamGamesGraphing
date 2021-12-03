@@ -8,8 +8,20 @@
 #include "scc.h"
 
 bool testSCCs() {
-  // test two games that are similar
-  return false;
+  // test if SCCs work
+  Graph g(5);
+
+    g.addEdge(1, 0);
+    g.addEdge(0, 2);
+    g.addEdge(2, 1);
+    g.addEdge(0, 3);
+    g.addEdge(3, 4);
+  
+    cout << "Following are strongly connected components in "
+            "given graph \n";
+    g.printSCCs();
+  // return true if print SCC compiles
+  return true;
 }
 
 int main(int argc, char* argv[]) {
@@ -30,4 +42,18 @@ int main(int argc, char* argv[]) {
   for (const Game& game : games) {
     std::cout << game.name << ": " << game.popular_tags << "\n";
   }
+
+  int passed_cases = 0; // test cases passed
+  int failed_cases = 0; // test cases failed
+
+  // next test case
+
+  bool test_case_SCC = testSCCs();
+  if (test_case_SCC) {passed_cases++;}
+  else {failed_cases++;}
+
+  // print results
+  std::cout << "tests passed: " << passed_cases << std::endl;
+  std::cout << "tests failed: " << failed_cases << std::endl;
+  std::cout << "total tests: " << passed_cases + failed_cases << std::endl;
 }
