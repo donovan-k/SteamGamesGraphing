@@ -7,8 +7,6 @@
 *.o
 *.obj
 
-resources/
-
 # Precompiled Headers
 *.gch
 *.pch
