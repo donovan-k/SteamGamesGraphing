@@ -5,6 +5,12 @@
 
 #include "game.h"
 #include "input.h"
+#include "scc.h"
+
+bool testSCCs() {
+  // test two games that are similar
+  return false;
+}
 
 int main(int argc, char* argv[]) {
   std::vector<Game> games;
