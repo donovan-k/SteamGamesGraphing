@@ -6,6 +6,7 @@
 - Drew up generic BFS, for alteration and use when the search algorithm is needed (Stan)
 
 ### Week 2
+- Began on Strongly Connected Components code to group together games that are "similar" (PJ)
 
 
 ### Week 3
