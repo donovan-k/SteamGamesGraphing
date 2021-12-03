@@ -5,7 +5,25 @@
 
 #include "game.h"
 #include "input.h"
+#include "scc.h"
 #include "similar.h"
+
+bool testSCCs() {
+  // test if SCCs work
+  Graph g(5);
+
+  g.addEdge(1, 0);
+  g.addEdge(0, 2);
+  g.addEdge(2, 1);
+  g.addEdge(0, 3);
+  g.addEdge(3, 4);
+
+  cout << "Following are strongly connected components in "
+          "given graph \n";
+  g.printSCCs();
+  // return true if print SCC compiles
+  return true;
+}
 
 bool testSimilarClass() {
   // test two games that are similar
@@ -75,7 +93,13 @@ int main(int argc, char *argv[]) {
     failed_cases++;
   }
 
-  // next test case
+  // test the strongly connected components
+  bool test_case_SCC = testSCCs();
+  if (test_case_SCC) {
+    passed_cases++;
+  } else {
+    failed_cases++;
+  }
 
   // print results
   std::cout << "tests passed: " << passed_cases << std::endl;
