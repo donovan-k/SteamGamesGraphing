@@ -5,22 +5,22 @@
 
 #include "game.h"
 #include "input.h"
-#include "similar.h"
 #include "scc.h"
+#include "similar.h"
 
 bool testSCCs() {
   // test if SCCs work
   Graph g(5);
 
-    g.addEdge(1, 0);
-    g.addEdge(0, 2);
-    g.addEdge(2, 1);
-    g.addEdge(0, 3);
-    g.addEdge(3, 4);
-  
-    cout << "Following are strongly connected components in "
-            "given graph \n";
-    g.printSCCs();
+  g.addEdge(1, 0);
+  g.addEdge(0, 2);
+  g.addEdge(2, 1);
+  g.addEdge(0, 3);
+  g.addEdge(3, 4);
+
+  cout << "Following are strongly connected components in "
+          "given graph \n";
+  g.printSCCs();
   // return true if print SCC compiles
   return true;
 }
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     passed_cases++;
   } else {
     failed_cases++;
-   }
+  }
 
   // print results
   std::cout << "tests passed: " << passed_cases << std::endl;
