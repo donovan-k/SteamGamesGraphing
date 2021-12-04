@@ -18,7 +18,7 @@ bool testSCCs() {
   g.addEdge(0, 3);
   g.addEdge(3, 4);
 
-  cout << "Following are strongly connected components in "
+  std::cout << "Following are strongly connected components in "
           "given graph \n";
   g.printSCCs();
   // return true if print SCC compiles

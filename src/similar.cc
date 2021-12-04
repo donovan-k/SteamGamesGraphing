@@ -1,5 +1,7 @@
 #include "similar.h"
 
+#include <sstream>
+
 /**
  * function for comparing two games to see if they are similar
  * tolerance should be between 0 and 1 and the higher it is the less likely two

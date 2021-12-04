@@ -2,7 +2,6 @@
 #define SIMILAR_H
 
 #include "game.h"
-#include <bits/stdc++.h>
 #include <iostream>
 #include <string>
 #include <vector>
