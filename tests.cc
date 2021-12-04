@@ -98,7 +98,7 @@ bool testBFS(){
   return true;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   std::vector<Game> games;
   
   std::ifstream fin("test.csv");
@@ -132,7 +132,7 @@ int main(int argc, char* argv[]) {
   } else {
     failed_cases++;
   }
-  
+
   // test the strongly connected components
   bool test_case_SCC = testSCCs();
   if (test_case_SCC) {
@@ -140,7 +140,7 @@ int main(int argc, char* argv[]) {
   } else {
     failed_cases++;
   }
-  
+
   // print results
   std::cout << "tests passed: " << passed_cases << std::endl;
   std::cout << "tests failed: " << failed_cases << std::endl;
