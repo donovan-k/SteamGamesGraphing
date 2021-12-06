@@ -6,9 +6,33 @@
 
 using namespace std;
 
+// constructor for creating empty graph with size V
 Graph::Graph(int V) {
   this->V = V;
   adj = new list<int>[V];
+}
+
+// constructor for creating graph from vector of games
+Graph::Graph(const vector<Game>& games) {
+  V = games.size();
+  adj = new list<int>[V];
+  games_ = games;
+
+  // goes through each game and compares it with every other game to 
+  // see if they are similar and put an edge between the index positions
+  for (int i = 0; i < V; i++) {
+    for (int j = 0; j < V; j++) {
+      if (i == j) continue;
+      if (Similar::areSimilar(games[i], games[j])) {
+        addEdge(i, j);
+      }
+    }
+  }
+}
+
+// destructor
+Graph::~Graph() {
+  delete[] adj;
 }
 
 // A recursive function to print DFS starting from v
@@ -88,4 +112,31 @@ void Graph::printSCCs() {
       cout << endl;
     }
   }
+}
+
+// Get game from index position
+Game Graph::getGame(int index) const {
+  return games_.at(index);
+}
+
+// Get games that are similar (have edges) to game at index ind
+vector<Game> Graph::getSimilarGames(int ind) const {
+  // get the list of siimlar games
+  list<int> similar_indexes = adj[ind];
+
+  // reserve space for the similar games vector
+  vector<Game> similar_games;
+  similar_games.reserve(similar_indexes.size());
+
+  // from the index of the similar game extract the game object 
+  // associated with it
+  for (int i : similar_indexes) {
+    similar_games.push_back(games_.at(i));
+  }
+
+  return similar_games;
+}
+
+std::list<int> * Graph::getAdjacencyList() {
+  return adj;
 }
