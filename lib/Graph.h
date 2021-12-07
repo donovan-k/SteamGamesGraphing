@@ -12,6 +12,7 @@
 using std::vector;
 
 class Graph {
+private:
   int V;                        // No. of vertices
   std::list<int> *adj;          // An array of adjacency lists
   const vector<Game>& games_;   // Reference to the vector of games
@@ -51,8 +52,16 @@ public:
   // Get games that are similar (have edges) to game at index ind
   vector<Game> getSimilarGames(int ind) const;
 
+  // Get games that are similar (have edges) to game at index ind
+  list<int> getSimilarGames(int ind) const;
+
+  // check if two games are similar (have edges between them)
+  bool areSimilar(int i, int j) const;
+
   // Get method for adjacency list
   std::list<int> * getAdjacencyList();
+
+  int size() const;
 
 };
 

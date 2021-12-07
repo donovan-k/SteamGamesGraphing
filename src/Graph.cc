@@ -137,6 +137,27 @@ vector<Game> Graph::getSimilarGames(int ind) const {
   return similar_games;
 }
 
+list<int> Graph::getSimilarGames(int ind) const {
+  // get the list of siimlar games
+  list<int> similar_indexes = adj[ind];
+
+  return similar_indexes;
+}
+
+bool Graph::areSimilar(int i, int j) const {
+  list<int> similar_games = adj[i];
+
+  for (int k : similar_games) {
+    if (k == j) {return true;}
+  }
+
+  return false;
+}
+
 std::list<int> * Graph::getAdjacencyList() {
   return adj;
+}
+
+int Graph::size() const {
+  return V;
 }
