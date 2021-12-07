@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <pair>
+#include <utility>
 
 #include "cs225/PNG.h"
 #include "cs225/HSLAPixel.h"
@@ -17,7 +17,7 @@ using cs225::HSLAPixel;
 class ForceDirectedDraw {
   public:
     // constructs a force directed object
-    ForceDirectedDraw(const Graph& graph, int width, int height);
+    ForceDirectedDraw(Graph * const graph, int width, int height);
 
     // draws the graph on a png and saves to file "filename"
     vector<pair<int, int>> drawGraph(const string& filename, int iterations);
@@ -27,7 +27,7 @@ class ForceDirectedDraw {
     void drawGameSimilarGraph(string filename, int game_index);
 
   private:
-    const Graph& graph_;
+    Graph * const graph_;
     int width_, height_;
 
     // helper functions

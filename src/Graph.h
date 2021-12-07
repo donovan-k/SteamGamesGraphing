@@ -15,7 +15,7 @@ class Graph {
 private:
   int V;                        // No. of vertices
   std::list<int> *adj;          // An array of adjacency lists
-  const vector<Game>& games_;   // Reference to the vector of games
+  vector<Game> * const games_;   // Reference to the vector of games
   
 
   // Fills Stack with vertices (in increasing order of finishing
@@ -31,7 +31,7 @@ public:
   Graph(int V);
 
   // constructor for creating graph from vector of games
-  Graph(const vector<Game>& games);
+  Graph(vector<Game> * const games);
   
   // destructor
   ~Graph();
@@ -50,10 +50,10 @@ public:
   Game getGame(int index) const;
 
   // Get games that are similar (have edges) to game at index ind
-  vector<Game> getSimilarGames(int ind) const;
+  std::vector<Game> getSimilarGames(int ind) const;
 
   // Get games that are similar (have edges) to game at index ind
-  list<int> getSimilarGames(int ind) const;
+  // std::list<int> getSimilarGames(int ind) const;
 
   // check if two games are similar (have edges between them)
   bool areSimilar(int i, int j) const;

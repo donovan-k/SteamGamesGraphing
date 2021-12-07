@@ -7,23 +7,24 @@
 using namespace std;
 
 // constructor for creating empty graph with size V
-Graph::Graph(int V) {
+Graph::Graph(int V) :
+  games_(nullptr) {
   this->V = V;
   adj = new list<int>[V];
 }
 
 // constructor for creating graph from vector of games
-Graph::Graph(const vector<Game>& games) {
-  V = games.size();
+Graph::Graph(vector<Game> * const games)
+  : games_(games){
+  V = games->size();
   adj = new list<int>[V];
-  games_ = games;
 
   // goes through each game and compares it with every other game to 
   // see if they are similar and put an edge between the index positions
   for (int i = 0; i < V; i++) {
     for (int j = 0; j < V; j++) {
       if (i == j) continue;
-      if (Similar::areSimilar(games[i], games[j])) {
+      if (Similar::areSimilar(games->at(i), games->at(j), 0.1)) {
         addEdge(i, j);
       }
     }
@@ -116,7 +117,7 @@ void Graph::printSCCs() {
 
 // Get game from index position
 Game Graph::getGame(int index) const {
-  return games_.at(index);
+  return games_->at(index);
 }
 
 // Get games that are similar (have edges) to game at index ind
@@ -131,18 +132,18 @@ vector<Game> Graph::getSimilarGames(int ind) const {
   // from the index of the similar game extract the game object 
   // associated with it
   for (int i : similar_indexes) {
-    similar_games.push_back(games_.at(i));
+    similar_games.push_back(games_->at(i));
   }
 
   return similar_games;
 }
 
-list<int> Graph::getSimilarGames(int ind) const {
-  // get the list of siimlar games
-  list<int> similar_indexes = adj[ind];
+// list<int> Graph::getSimilarGames(int ind) const {
+//   // get the list of siimlar games
+//   list<int> similar_indexes = adj[ind];
 
-  return similar_indexes;
-}
+//   return similar_indexes;
+// }
 
 bool Graph::areSimilar(int i, int j) const {
   list<int> similar_games = adj[i];

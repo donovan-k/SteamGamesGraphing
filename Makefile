@@ -1,9 +1,12 @@
 CXX = clang++
 LDFLAGS =  -std=c++14 -stdlib=libc++ -lc++abi
-CXXFLAGS = $(LDFLAGS)
 
-steamer: main.cc lib/*.h src/*.cc
-	$(CXX) $(CXXFLAGS) -o steamer -I lib/ main.cc src/*.cc
+SRC_FILES = $(shell find src/ -name '*.cc')
 
-test: tests.cc lib/*.h src/*.cc
-	$(CXX) $(CXXFLAGS) -o test -I lib/ tests.cc src/*.cc
+CXXFLAGS = $(LDFLAGS) -I src/
+
+steamer: main.cc $(SRC_FILES)
+	$(CXX) $(CXXFLAGS) -o steamer main.cc $(SRC_FILES)
+
+test: tests.cc $(SRC_FILES)
+	$(CXX) $(CXXFLAGS) -o test tests.cc $(SRC_FILES)

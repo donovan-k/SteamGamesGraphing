@@ -2,23 +2,23 @@
 #include <random>
 #include <cmath>
 
-ForceDirectedDraw::ForceDirectedDraw(const Graph& graph, int width, int height) {
-    graph_ = graph;
+ForceDirectedDraw::ForceDirectedDraw(Graph * const graph, int width, int height)
+  : graph_(graph) {
     width_ = width;
     height_ = height;
 }
 
-vector<pair<int, int>> ForceDirectedDraw::drawGraph(string filename, int iterations) {
+vector<pair<int, int>> ForceDirectedDraw::drawGraph(const string& filename, int iterations) {
     // method uses the barycentric method to draw graph
-    const list<int>* adj_list = graph_.getAdjacencyList();
-    PNG img(width, height);
+    const std::list<int>* adj_list = graph_->getAdjacencyList();
+    PNG img(width_, height_);
     float area = width_ * height_;
-    vector<pair<int, int>> vector_pos = generateRandomPositions(graph_.size());
-    float k = std::sqrt(area / graph_.size());
+    vector<pair<int, int>> vector_pos = generateRandomPositions(graph_->size());
+    float k = std::sqrt(area / graph_->size());
     vector<pair<float, float>> displacment;
-    displacment.resize(graph_.size(), pair<float, float>(0,0));
+    displacment.resize(graph_->size(), pair<float, float>(0,0));
 
-    int temp = 100;
+    float temp = 100;
     for (int t = 0; t < iterations; t++) {
         // calculate repulsive forces
         for (int v = 0; v < vector_pos.size(); v++) {
@@ -36,8 +36,8 @@ vector<pair<int, int>> ForceDirectedDraw::drawGraph(string filename, int iterati
         }
 
         // calculate attractive forces
-        for (int i = 0; i < graph_.size(); i++) {
-            list<int>& v_list = adj_list[i];
+        for (int i = 0; i < graph_->size(); i++) {
+            const std::list<int>& v_list = adj_list[i];
             for (const int edge : v_list) {
                 // calculate difference vector and unit vector for vector i
                 pair<float, float> diff_vec_i = unitVector(vector_pos[i], vector_pos[i], false);
@@ -60,14 +60,14 @@ vector<pair<int, int>> ForceDirectedDraw::drawGraph(string filename, int iterati
         }
 
         // adjust position of each vertex
-        for (int v = 0; v < graph_.size(); v++) {
+        for (int v = 0; v < graph_->size(); v++) {
             pair<float, float> v_disp = displacment[v];
             pair<float, float> diff_vec = unitVector(v_disp, v_disp, false);
             float magnitude = std::sqrt( diff_vec.first * diff_vec.first + diff_vec.second * diff_vec.second );
             
             // adjust position of vertex v
-            vector_pos[v].first += (v_dist.first / magnitude) * std::min(v_dist.first, temp);
-            vector_pos[v].second += (v_dist.second / magnitude) * std::min(v_dist.second, temp);
+            vector_pos[v].first += (v_disp.first / magnitude) * std::min(v_disp.first, temp);
+            vector_pos[v].second += (v_disp.second / magnitude) * std::min(v_disp.second, temp);
 
             // make sure position doesn't go outside of frame
             vector_pos[v].first = std::min(width_ - 1, std::max(0, vector_pos[v].first));
