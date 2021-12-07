@@ -61,6 +61,7 @@ public:
   // Get method for adjacency list
   std::list<int> * getAdjacencyList();
 
+  // returns the number of vertices in the adjacency list
   int size() const;
 
 };
