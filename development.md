@@ -16,3 +16,7 @@
 - Set things up for writing and running tests (Alex Liao)
 - Get testing done for similarity (Donovan)
 - Get testing done for SCC (PJ)
+
+### Week 4
+- Worked on and updated SCC code to return a vector<vector<int>> (PJ)
+  
