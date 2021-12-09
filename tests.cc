@@ -5,8 +5,11 @@
 
 #include "game.h"
 #include "input.h"
-#include "scc.h"
+#include "Graph.h"
 #include "similar.h"
+#include "BFS.h"
+
+using std::cout;
 
 bool testSCCs() {
   // test if SCCs work
