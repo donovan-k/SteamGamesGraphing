@@ -1,9 +1,9 @@
 CXX = clang++
-LDFLAGS =  -std=c++14 -stdlib=libc++ -lc++abi
+LDFLAGS = -std=c++14 -stdlib=libc++ -lc++abi
 
 SRC_FILES = $(shell find src/ -name '*.cc')
 
-CXXFLAGS = $(LDFLAGS) -I src/
+CXXFLAGS = $(LDFLAGS) -O2 -march=native -pipe -I src/
 
 steamer: main.cc $(SRC_FILES)
 	$(CXX) $(CXXFLAGS) -o steamer main.cc $(SRC_FILES)
