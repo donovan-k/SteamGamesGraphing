@@ -11,17 +11,25 @@ ForceDirectedDraw::ForceDirectedDraw(Graph * const graph, int width, int height)
 vector<pair<int, int>> ForceDirectedDraw::drawGraph(const string& filename, int iterations) {
     // method uses the barycentric method to draw graph
     const std::list<int>* adj_list = graph_->getAdjacencyList();
-    PNG img(width_, height_);
+    std::cout << graph_->size() << std::endl;
     float area = width_ * height_;
     vector<pair<int, int>> vector_pos = generateRandomPositions(graph_->size());
+
+    // values for computation
     float k = std::sqrt(area / graph_->size());
     vector<pair<float, float>> displacment;
-    displacment.resize(graph_->size(), pair<float, float>(0,0));
+    displacment.resize(graph_->size(), pair<float, float>(0.0,0.0));
 
-    float temp = 100;
+    // min and max position holders
+    pair<int, int> min(INT32_MAX, INT32_MAX);
+    pair<int, int> max(INT32_MIN, INT32_MIN);
+
+    float temp = std::log10(iterations);
     for (int t = 0; t < iterations; t++) {
         // calculate repulsive forces
         for (int v = 0; v < vector_pos.size(); v++) {
+            displacment[v].first = 0.0;
+            displacment[v].second = 0.0;
             for (int u = 0; u < vector_pos.size(); u++) {
                 if (v == u) continue;
                 // calculate difference vector and unit vector
@@ -40,18 +48,13 @@ vector<pair<int, int>> ForceDirectedDraw::drawGraph(const string& filename, int 
             const std::list<int>& v_list = adj_list[i];
             for (const int edge : v_list) {
                 // calculate difference vector and unit vector for vector i
-                pair<float, float> diff_vec_i = unitVector(vector_pos[i], vector_pos[i], false);
-                pair<float, float> unit_vec_i = unitVector(vector_pos[i], vector_pos[i], true);
-                float magnitude_i = std::sqrt( diff_vec_i.first * diff_vec_i.first + diff_vec_i.second * diff_vec_i.second );
-
-                // calculate difference vector and unit vector for vector edge
-                pair<float, float> diff_vec = unitVector(vector_pos[edge], vector_pos[edge], false);
-                pair<float, float> unit_vec = unitVector(vector_pos[edge], vector_pos[edge], true);
+                pair<float, float> diff_vec = unitVector(vector_pos[i], vector_pos[edge], false);
+                pair<float, float> unit_vec = unitVector(vector_pos[i], vector_pos[edge], true);
                 float magnitude = std::sqrt( diff_vec.first * diff_vec.first + diff_vec.second * diff_vec.second );
 
                 // find the displacement vector for vector i
-                displacment[i].first -= unit_vec_i.first * attrForce(magnitude_i, k);
-                displacment[i].second -= unit_vec_i.second * attrForce(magnitude_i, k);
+                displacment[i].first -= unit_vec.first * attrForce(magnitude, k);
+                displacment[i].second -= unit_vec.second * attrForce(magnitude, k);
 
                 // find the displacement vector for vector edge
                 displacment[edge].first += unit_vec.first * attrForce(magnitude, k);
@@ -62,44 +65,57 @@ vector<pair<int, int>> ForceDirectedDraw::drawGraph(const string& filename, int 
         // adjust position of each vertex
         for (int v = 0; v < graph_->size(); v++) {
             pair<float, float> v_disp = displacment[v];
-            pair<float, float> diff_vec = unitVector(v_disp, v_disp, false);
-            float magnitude = std::sqrt( diff_vec.first * diff_vec.first + diff_vec.second * diff_vec.second );
+            float magnitude = std::sqrt( v_disp.first * v_disp.first + v_disp.second * v_disp.second );
             
             // adjust position of vertex v
             vector_pos[v].first += (v_disp.first / magnitude) * std::min(v_disp.first, temp);
             vector_pos[v].second += (v_disp.second / magnitude) * std::min(v_disp.second, temp);
 
-            // make sure position doesn't go outside of frame
-            vector_pos[v].first = std::min(width_ - 1, std::max(0, vector_pos[v].first));
-            vector_pos[v].second = std::min(height_ - 1, std::max(0, vector_pos[v].second));
+            // find min and max of positions
+            if (vector_pos[v].first < min.first) {min.first = vector_pos[v].first;}
+            if (vector_pos[v].first > max.first) {max.first = vector_pos[v].first;}
+            if (vector_pos[v].second < min.second) {min.second = vector_pos[v].second;}
+            if (vector_pos[v].second > max.second) {max.second = vector_pos[v].second;}
         }
 
         // cool the temp down as the layout approaches a better config
-        temp -= 100 / iterations;
+        temp -= std::log10(iterations) / iterations;
     }
+
+    normalizePositions(vector_pos, min, max);
 
     drawPositions(vector_pos, filename);
 
     return vector_pos;
 }
 
+void ForceDirectedDraw::normalizePositions(vector<pair<int, int>>& positions, pair<int, int>& min, pair<int, int>& max) {
+    for (int p = 0; p < positions.size(); p++) {
+        double pf = ((double)(positions[p].first - min.first) / (max.first - min.first)) * (width_ - 1);
+        double ps = ((double)(positions[p].second - min.second) / (max.second - min.second)) * (height_ - 1);
+        positions[p].first = pf;
+        positions[p].second = ps;
+    }
+}
+
 void ForceDirectedDraw::drawPositions(const vector<pair<int, int>>& positions, const string& filename) {
     PNG *png = new PNG(width_, height_);
 
-    // go through each position and color that pixel black
+    // go through each position and color that pixel a random color
+    int pixel_size = width_ * height_ / (1000);
+    double h = 0;
     for (auto pos : positions) {
+        std::random_device rd;
+        std::mt19937 e2(rd());
+        std::uniform_real_distribution<> dist(0, 360);
+        h = dist(e2);
+        HSLAPixel pixel_copy(h, 1, 0.5, 0.99);
         HSLAPixel& pixel = png->getPixel(pos.first, pos.second);
-        pixel.h = 0;
-        pixel.s = 0;
-        pixel.l = 0;
-        pixel.a = 1;
+    
+        pixel = pixel_copy;
     }
 
     png->writeToFile(filename);
-}
-
-void ForceDirectedDraw::drawGameSimilarGraph(string filename, int game_index) {
-
 }
 
 vector<pair<int, int>> ForceDirectedDraw::generateRandomPositions(int size) {

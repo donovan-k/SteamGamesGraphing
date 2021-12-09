@@ -24,7 +24,7 @@ Graph::Graph(vector<Game> * const games)
   for (int i = 0; i < V; i++) {
     for (int j = 0; j < V; j++) {
       if (i == j) continue;
-      if (Similar::areSimilar(games->at(i), games->at(j), 0.1)) {
+      if (Similar::areSimilar(games->at(i), games->at(j), 0.9)) {
         addEdge(i, j);
       }
     }

@@ -5,6 +5,8 @@
 
 #include "game.h"
 #include "input.h"
+#include "Graph.h"
+#include "force_drawing.h"
 
 int main(int argc, char* argv[]) {
   std::vector<Game> games;
@@ -17,14 +19,26 @@ int main(int argc, char* argv[]) {
         "' for reading: No such file or directory\n";
       abort();
     }
+
     getline(fin, line);
     while (getline(fin, line)) {
       games.push_back(parse_game(line));
     }
   }
 
-  std::cout << "We have " << games.size() << " games in total!\n";
-  for (const Game& game : games) {
-    std::cout << game.name << ": " << game.popular_tags << "\n";
+  Graph * graph = new Graph(&games);
+
+  for (int i = 0; i < graph->size(); i++) {
+    vector<Game> gs = graph->getSimilarGames(i);
+    std::cout << graph->getGame(i).name << std::endl;
+    for (Game g : gs) {
+      std::cout << g.name << std::endl;
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
   }
+
+  ForceDirectedDraw draw(graph, 100, 100);
+  draw.drawGraph("graph.png", 1);
+
 }

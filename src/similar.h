@@ -16,7 +16,9 @@ public:
   /**
    * function for comparing two games to see if they are similar
    * tolerance should be between 0 and 1 and the higher it is the less likely
-   * two games will be similar
+   * two games will be similar. Use tolerance between 0.5 and 0.8. 
+   * Use 0.5 tolerance for less strict (more similar games for each game). 
+   * Use 0.8 tolerance for more strict (less similar games for each game).
    */
   static bool areSimilar(const Game &game1, const Game &game2,
                          double tolerance);

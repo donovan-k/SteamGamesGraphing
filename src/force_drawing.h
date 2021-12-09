@@ -22,15 +22,14 @@ class ForceDirectedDraw {
     // draws the graph on a png and saves to file "filename"
     vector<pair<int, int>> drawGraph(const string& filename, int iterations);
 
-    // draws a subgraph that is a connected graph of all games connected to game at game_index
-    // and saves it as a png and saves to file "filename"
-    void drawGameSimilarGraph(string filename, int game_index);
-
   private:
     Graph * const graph_;
     int width_, height_;
 
     // helper functions
+
+    // normalize positions to be in bounds of the image
+    void normalizePositions(vector<pair<int, int>>& positions, pair<int, int>& min, pair<int, int>& max);
 
     // draws the positions of each vertex on a png
     void drawPositions(const vector<pair<int, int>>& positions, const string& filename);
