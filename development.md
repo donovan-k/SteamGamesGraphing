@@ -18,5 +18,5 @@
 - Get testing done for SCC (PJ)
 
 ### Week 4
-- Worked on and updated SCC code to return a vector<vector<int>> (PJ)
+- Updated Graph.cc and Graph.h files to create a getSCC function to retrieve the indices for finding Strongly Connected Components (PJ)
   
