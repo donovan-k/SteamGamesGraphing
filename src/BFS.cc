@@ -16,7 +16,7 @@ void BFSg::BFS(int s){//visits each vertex
   list<int>::iterator it;//iterator to find adjacent vertecies
   while(!Q.empty()){//search through until queue is empty
     s = Q.front();//set searcher to the front of  the queue
-    cout << s << " \n";//textual feedback
+   // cout << s << " \n";//textual feedback
     Q.pop_front();//remove from queue, it is being checked
     for(it = al[s].begin(); it != al[s].end(); ++it){
       if(!wasVisited[*it]){
