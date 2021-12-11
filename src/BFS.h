@@ -1,13 +1,12 @@
-
+#include "Graph.h"
 #include<iostream>
 #include<list>
 using namespace std;
 class BFSg
 {
-  int vertex;//number of vertices
-  list<int> *al;//points to adjacency lists, might only be used for testing
+  int vert;//number of vertices
+  list<int> *al;//points to adjacency lists
 public:
-  BFSg(int vertex);//constructor
-  void edgeInstall(int v, int w);//adds edge for testing
+  BFSg(Graph * graphx);//constructor
   void BFS(int s);//prints BFS traversal
 };
