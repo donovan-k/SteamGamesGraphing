@@ -71,33 +71,32 @@ bool testSimilarClass() {
 
 
 bool testBFS(){
-  BFSg graphene(5);//form 5 vertex graph
-  graphene.edgeInstall(0, 1);
-  graphene.edgeInstall(1, 0);
-  graphene.edgeInstall(1, 2);
-  graphene.edgeInstall(2, 1);
-  graphene.edgeInstall(2, 3);
-  graphene.edgeInstall(3, 2);
-  graphene.edgeInstall(3, 0);
-  graphene.edgeInstall(0, 3);
-  graphene.edgeInstall(4, 3);
-  graphene.edgeInstall(3, 4);//print traversal from each
-  
+  Graph graphene(5);//form 5 vertex graph
+  graphene.addEdge(0, 1);
+  graphene.addEdge(1, 0);
+  graphene.addEdge(1, 2);
+  graphene.addEdge(2, 1);
+  graphene.addEdge(2, 3);
+  graphene.addEdge(3, 2);
+  graphene.addEdge(3, 0);
+  graphene.addEdge(0, 3);
+  graphene.addEdge(4, 3);
+  graphene.addEdge(3, 4);//print traversal from each
+  BFSg * graphen = new BFSg(&graphene);
   cout<<"BFS starting with 1 \n";
-  graphene.BFS(1);
+  graphen->BFS(1);
   
   cout<<"BFS starting with 2 \n";
-  graphene.BFS(2);
+  graphen->BFS(2);
   
   cout<<"BFS starting with 3 \n";
-  graphene.BFS(3);
+  graphen->BFS(3);
   
   cout<<"BFS starting with 4 \n";
-  graphene.BFS(4);
+  graphen->BFS(4);
   
   cout<<"BFS starting with 0 \n";
-  graphene.BFS(0);
-  
+  graphen->BFS(0);
   return true;
 }
 
