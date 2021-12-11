@@ -26,6 +26,8 @@ private:
   // A recursive function to print DFS starting from v
   void DFSUtil(int v, bool visited[]);
 
+  void DFSUtil(int v, bool visited[], std::vector<int> & component);
+
 public:
   // constructor for creating empty graph with size V
   Graph(int V);
@@ -42,6 +44,9 @@ public:
   // The main function that finds and prints strongly connected
   // components
   void printSCCs();
+
+  /* Function that returns a vector of vectors of strongly connected integers */
+  vector<vector<int>> getSCCs();
 
   // Function that returns reverse (or transpose) of this graph
   Graph getTranspose();
