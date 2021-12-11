@@ -21,15 +21,50 @@ bool testSCCs() {
   g.addEdge(0, 3);
   g.addEdge(3, 4);
   
-  std::cout << "Following are strongly connected components in "
-  "given graph \n";
-  // g.printSCCs();
+  // std::cout << "Following are strongly connected components in "
+  // "given graph \n";
+  // // g.printSCCs();
   vector<vector<int>> SCCs = g.getSCCs();
-  // return true if print SCC compiles
-  for (int i = 0; i < SCCs[0].size(); i++) {
-    std::cout << SCCs[0][i] << std::endl;
+  
+  vector<int> test_vec;
+  test_vec.push_back(0);
+  test_vec.push_back(1);
+  test_vec.push_back(2);
+
+  if (test_vec.size() != SCCs[0].size()) {
+    return false;
+  }
+  /* Return true if the vector contains the correct strongly connected components */
+  for (int i = 0; i < test_vec.size(); i++) {
+    if (test_vec[i] != SCCs[0][i]) {
+      return false;
+    }
   }
   return true;
+}
+
+bool testStronglyConnected() {
+    Graph g1(5);
+    g1.addEdge(0, 1);
+    g1.addEdge(1, 2);
+    g1.addEdge(2, 3);
+    g1.addEdge(3, 0);
+    g1.addEdge(2, 4);
+    g1.addEdge(4, 2);
+    bool g1_check = g1.isStronglyConnected();
+
+    Graph g2(4);
+    g2.addEdge(0, 1);
+    g2.addEdge(1, 2);
+    g2.addEdge(2, 3);
+
+    bool g2_check = g2.isStronglyConnected();
+
+    if (g1_check == true && g2_check == false) {
+      return true;
+    } else {
+      return false;
+    }
 }
 
 bool testSimilarClass() {
@@ -143,6 +178,13 @@ int main(int argc, char *argv[]) {
   // test the strongly connected components
   bool test_case_SCC = testSCCs();
   if (test_case_SCC) {
+    passed_cases++;
+  } else {
+    failed_cases++;
+  }
+
+  bool test_case_isSCC = testStronglyConnected();
+  if (test_case_isSCC) {
     passed_cases++;
   } else {
     failed_cases++;
