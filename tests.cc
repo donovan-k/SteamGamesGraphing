@@ -178,15 +178,19 @@ int main(int argc, char *argv[]) {
   bool test_case_SCC = testSCCs();
   if (test_case_SCC) {
     passed_cases++;
+    std::cout << "test_case_SCC PASSED" << std::endl;
   } else {
     failed_cases++;
+    std::cout << "test_case_SCC FAILED" << std::endl;
   }
 
   bool test_case_isSCC = testStronglyConnected();
   if (test_case_isSCC) {
     passed_cases++;
+    std::cout << "test_case_isSCC PASSED" << std::endl;
   } else {
     failed_cases++;
+    std::cout << "test_case_isSCC FAILED" << std::endl;
   }
 
   // print results
