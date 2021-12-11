@@ -23,12 +23,8 @@ bool testSCCs() {
   
   std::cout << "Following are strongly connected components in "
   "given graph \n";
-  // g.printSCCs();
-  vector<vector<int>> SCCs = g.getSCCs();
+  g.printSCCs();
   // return true if print SCC compiles
-  for (int i = 0; i < SCCs[0].size(); i++) {
-    std::cout << SCCs[0][i] << std::endl;
-  }
   return true;
 }
 
