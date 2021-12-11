@@ -1,13 +1,10 @@
 #include "BFS.h"
-#include<queue>
-#include<list>
+#include "Graph.h"
+#include <list>
 
-BFSg::BFSg(int vertex){
-  this->vertex = vertex;//updates BFS vertex
-  al = new list<int>[vertex];//creates a new adjacency list
-}
-void BFSg::edgeInstall(int v, int w){
-  al[v].push_back(w);//adds edge by adding something to the al
+BFSg::BFSg(Graph * graphx){
+  vert = graphx->size();//sets the size of the graph
+  al = graphx->getAdjacencyList();
 }
 void BFSg::BFS(int s){//visits each vertex
   bool *wasVisited = new bool[vertex];//makes pointer to an array keeping track of whether or not the node has been checked
