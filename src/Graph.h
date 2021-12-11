@@ -63,7 +63,8 @@ public:
 
   // returns the number of vertices in the adjacency list
   int size() const;
-
+  // Checks if a sub-graph is strongly connected;
+  bool isStronglyConnected();
 };
 
 #endif // SCC_H
