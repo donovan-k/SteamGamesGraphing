@@ -19,7 +19,7 @@ void BFSg::BFS(int s, vector<Game> games){//visits each vertex
   wasVisited[s] = true;//current node has been visited
   Q.push_back(s);//queue initial node
   list<int>::iterator it;//iterator to find adjacent vertecies
-  while(!Q.empty() || int j <=20){//search through until queue is empty
+  while(!Q.empty() && int j <=20){//search through until queue is empty
     s = Q.front();//set searcher to the front of  the queue
     cout << games[s].name << " \n"; //textual feedback
     Q.pop_front();//remove from queue, it is being checked
