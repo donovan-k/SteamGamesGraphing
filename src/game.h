@@ -18,7 +18,7 @@ struct Game {
   std::vector<std::string> game_details;
   std::vector<std::string> languages;
   std::string achievements;
-  std::string genre;
+  std::vector<std::string> genre;
   std::string game_description;
   std::string mature_content;
   std::string minimum_requirements;

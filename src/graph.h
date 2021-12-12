@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "game.h"
-#include "similar.h"
 
 class Graph {
 private:
@@ -31,7 +30,7 @@ public:
   Graph(int V);
 
   // constructor for creating graph from vector of games
-  Graph(std::vector<Game> *const games);
+  Graph(std::vector<Game> *const games, float threshold);
 
   // destructor
   ~Graph();

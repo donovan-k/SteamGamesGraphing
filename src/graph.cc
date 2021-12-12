@@ -1,6 +1,7 @@
 #include <list>
 #include <stack>
 
+#include "similar.h"
 #include "graph.h"
 
 // constructor for creating empty graph with size V
@@ -10,7 +11,7 @@ Graph::Graph(int V) : games_(nullptr) {
 }
 
 // constructor for creating graph from vector of games
-Graph::Graph(std::vector<Game> *const games) : games_(games) {
+Graph::Graph(std::vector<Game> *const games, float threshold) : games_(games) {
   V = games->size();
   adj = new std::list<int>[V];
 
@@ -20,7 +21,7 @@ Graph::Graph(std::vector<Game> *const games) : games_(games) {
     for (int j = 0; j < V; j++) {
       if (i == j)
         continue;
-      if (Similar::areSimilar(games->at(i), games->at(j), 0.9)) {
+      if (gamesSimilar(games->at(i), games->at(j), threshold)) {
         addEdge(i, j);
       }
     }

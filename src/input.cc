@@ -38,7 +38,7 @@ Game parse_game(const std::string &s) {
   game.game_details = lex_csv(lex_token_string(buffer));
   game.languages = lex_csv(lex_token_string(buffer));
   game.achievements = lex_token_string(buffer);
-  game.genre = lex_token_string(buffer);
+  game.genre = lex_csv(lex_token_string(buffer));
   game.game_description = lex_token_string(buffer);
   game.mature_content = lex_token_string(buffer);
   game.minimum_requirements = lex_token_string(buffer);

@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  Graph graph(&games);
+  Graph graph(&games, 0.3f);
   BFSg bfsg(&graph);
 
   ForceDirectedDraw draw(&graph, 1000, 1000);
