@@ -7,6 +7,7 @@
 #include "input.h"
 #include "Graph.h"
 #include "force_drawing.h"
+#include "BFS.h"
 
 int main(int argc, char* argv[]) {
   std::vector<Game> games;
