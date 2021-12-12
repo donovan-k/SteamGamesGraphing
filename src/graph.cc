@@ -10,7 +10,7 @@ Graph::Graph(int V) : games_(nullptr) {
 }
 
 // constructor for creating graph from vector of games
-Graph::Graph(vector<Game> *const games) : games_(games) {
+Graph::Graph(std::vector<Game> *const games) : games_(games) {
   V = games->size();
   adj = new std::list<int>[V];
 
@@ -73,7 +73,7 @@ void Graph::addEdge(int v, int w) {
   adj[v].push_back(w); // Add w to v’s list.
 }
 
-void Graph::fillOrder(int v, std::vector<bool>& visited, std::stack<int> &s) {
+void Graph::fillOrder(int v, std::vector<bool> &visited, std::stack<int> &s) {
   // Mark the current node as visited and print it
   visited[v] = true;
 
@@ -121,9 +121,9 @@ void Graph::printSCCs() {
   }
 }
 
-vector<vector<int>> Graph::getSCCs() {
+std::vector<std::vector<int>> Graph::getSCCs() {
 
-  vector<vector<int>> SCCs;
+  std::vector<std::vector<int>> SCCs;
 
   std::stack<int> s;
 
@@ -163,12 +163,12 @@ vector<vector<int>> Graph::getSCCs() {
 Game Graph::getGame(int index) const { return games_->at(index); }
 
 // Get games that are similar (have edges) to game at index ind
-vector<Game> Graph::getSimilarGames(int ind) const {
+std::vector<Game> Graph::getSimilarGames(int ind) const {
   // get the list of siimlar games
   std::list<int> similar_indexes = adj[ind];
 
   // reserve space for the similar games vector
-  vector<Game> similar_games;
+  std::vector<Game> similar_games;
   similar_games.reserve(similar_indexes.size());
 
   // from the index of the similar game extract the game object

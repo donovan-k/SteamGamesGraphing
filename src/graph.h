@@ -9,13 +9,11 @@
 #include "game.h"
 #include "similar.h"
 
-using std::vector;
-
 class Graph {
 private:
   int V;                      // No. of vertices
   std::list<int> *adj;        // An array of adjacency lists
-  vector<Game> *const games_; // Reference to the vector of games
+  std::vector<Game> *const games_; // Reference to the vector of games
 
   // Fills Stack with vertices (in increasing order of finishing
   // times). The top element of stack has the maximum finishing
@@ -33,7 +31,7 @@ public:
   Graph(int V);
 
   // constructor for creating graph from vector of games
-  Graph(vector<Game> *const games);
+  Graph(std::vector<Game> *const games);
 
   // destructor
   ~Graph();
@@ -46,7 +44,7 @@ public:
   void printSCCs();
 
   /* Function that returns a vector of vectors of strongly connected integers */
-  vector<vector<int>> getSCCs();
+  std::vector<std::vector<int>> getSCCs();
 
   // Function that returns reverse (or transpose) of this graph
   Graph getTranspose();

@@ -6,11 +6,6 @@
 #include <string>
 #include <vector>
 
-using std::getline;
-using std::string;
-using std::stringstream;
-using std::vector;
-
 class Similar {
 public:
   /**
@@ -23,10 +18,11 @@ public:
   static bool areSimilar(const Game &game1, const Game &game2,
                          double tolerance);
 
-  static vector<string> getToken(string str, char delimiter);
+  static std::vector<std::string> getToken(const std::string &str,
+                                           char delimiter);
 
-  static double compareTokens(const vector<string> &tag1,
-                              const vector<string> &tag2);
+  static double compareTokens(const std::vector<std::string> &tag1,
+                              const std::vector<std::string> &tag2);
 };
 
 #endif // SIMILAR_H

@@ -1,8 +1,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <sys/wait.h>
-#include <unistd.h>
 #include <vector>
 
 #include "bfs.h"
@@ -32,12 +30,8 @@ int main(int argc, char *argv[]) {
   Graph graph(&games);
   BFSg bfsg(&graph);
 
-  __pid_t pid = fork();
-  if (pid == 0) {
-    ForceDirectedDraw draw(&graph, 100, 100);
-    draw.drawGraph("graph.png", 1);
-    exit(0);
-  }
+  ForceDirectedDraw draw(&graph, 1000, 1000);
+  draw.drawPositions(draw.computePositions(10)).writeToFile("graph.png");
 
   std::cout << "It looks like these groupings exist!\n";
   const std::vector<std::vector<int>> sccs = graph.getSCCs();
@@ -79,8 +73,4 @@ int main(int argc, char *argv[]) {
                 << "\n";
     }
   }
-
-  int stat;
-  wait(&stat);
-  return stat;
 }
