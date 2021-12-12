@@ -122,20 +122,19 @@ bool testBFS() {
   graphene.addEdge(4, 3);
   graphene.addEdge(3, 4); // print traversal from each
   BFSg graphen(&graphene);
+
+  // Test bfs starting with 1
   cout << "BFS starting with 1 \n";
-  graphen.BFS(1, 1);
+  vector<int> actual1 = graphen.BFS(1, 3);
+  vector<int> expected1 = {0,2,3};
+  if (actual1 != expected1) {return false;}
 
+  // Test bfs starting with 2
   cout << "BFS starting with 2 \n";
-  graphen.BFS(2, 1);
+  vector<int> actual2 = graphen.BFS(2, 4);
+  vector<int> expected2 = {1,3,0,4};
+  if (actual2 != expected2) {return false;}
 
-  cout << "BFS starting with 3 \n";
-  graphen.BFS(3, 1);
-
-  cout << "BFS starting with 4 \n";
-  graphen.BFS(4, 1);
-
-  cout << "BFS starting with 0 \n";
-  graphen.BFS(0, 1);
   return true;
 }
 
