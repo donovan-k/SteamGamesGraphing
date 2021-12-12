@@ -20,8 +20,7 @@ vector<pair<float, float>> ForceDirectedDraw::drawGraph(const string &filename,
 
   // values for computation
   float k = std::sqrt(area / graph_->size());
-  vector<pair<float, float>> displacment;
-  displacment.resize(graph_->size(), pair<float, float>(0.0, 0.0));
+  vector<pair<float, float>> displacment(graph_->size(), {0.0, 0.0});
 
   // min and max position holders
   pair<float, float> min(INFINITY, INFINITY);
@@ -127,19 +126,21 @@ void ForceDirectedDraw::normalizePositions(
 
 void ForceDirectedDraw::drawPositions(
     const vector<pair<float, float>> &positions, const string &filename) {
-  static const int BLOCK_SIZE = 10;
+  static const float BLOCK_SIZE = 10.0;
+  static const float DOT_SIZE = 5.0;
   PNG png(BLOCK_SIZE * width_, BLOCK_SIZE * height_);
 
   // go through each position and color that pixel a random color
   static std::random_device rd;
-  static std::mt19937 e2(rd());
+  static std::default_random_engine rng(rd());
   static std::uniform_real_distribution<> dist(0, 360);
   for (const auto &pos : positions) {
-    int hue = int(dist(e2));
-    for (int x = 0; x < BLOCK_SIZE; x++) {
-      for (int y = 0; y < BLOCK_SIZE; y++) {
-        png.getPixel(int(pos.first * BLOCK_SIZE) + x,
-                     int(pos.second * BLOCK_SIZE) + y) =
+    int hue = int(dist(rng));
+    for (int x = 0; x < DOT_SIZE; x++) {
+      for (int y = 0; y < DOT_SIZE; y++) {
+        png.getPixel(
+            int(pos.first * BLOCK_SIZE) + (BLOCK_SIZE - DOT_SIZE) / 2 + x,
+            int(pos.second * BLOCK_SIZE) + (BLOCK_SIZE - DOT_SIZE) / 2 + y) =
             HSLAPixel(hue, 1, 0.5, 0.99);
       }
     }
@@ -153,31 +154,16 @@ ForceDirectedDraw::generateRandomPositions(int size) {
   vector<pair<float, float>> positions;
   positions.reserve(size);
 
-  for (int i = 0; i < width_; i++) {
-    for (int j = 0; j < height_; j++) {
-      pair<float, float> pos(i, j);
-      positions.push_back(pos);
-    }
+  // random things
+  static std::random_device rd;
+  static std::default_random_engine rng(rd());
+  static std::uniform_real_distribution<> w_dist(0, width_);
+  static std::uniform_real_distribution<> h_dist(0, width_);
+  for (int i = 0; i < size; i++) {
+    positions.push_back({w_dist(rng), h_dist(rng)});
   }
 
-  // shuffle order of list
-  std::random_device dev;
-  std::mt19937 rng(dev());
-  std::shuffle(positions.begin(), positions.end(), dev);
-
-  // check edge case
-  if (size >= width_ * height_) {
-    return positions;
-  }
-
-  // Begin and End iterator
-  auto first = positions.begin();
-  auto last = positions.begin() + size;
-
-  // Copy the element
-  vector<pair<float, float>> positions_(first, last);
-
-  return positions_;
+  return positions;
 }
 
 float ForceDirectedDraw::repulsiveForce(float force, float k) {
