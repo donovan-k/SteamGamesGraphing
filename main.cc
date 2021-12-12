@@ -36,8 +36,8 @@ int main(int argc, char *argv[]) {
   std::cout << "It looks like these groupings exist!\n";
   const std::vector<std::vector<int>> sccs = graph.getSCCs();
   int genre_num = 1;
-  for (const std::vector<int>& scc : sccs) {
-    std::cout << "\tGenre #" << (genre_num ++) << ":\n";
+  for (const std::vector<int> &scc : sccs) {
+    std::cout << "\tGenre #" << (genre_num++) << ":\n";
     for (int index : scc) {
       std::cout << "\t\t" << graph.getGame(index).name << "\n";
     }

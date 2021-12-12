@@ -11,8 +11,8 @@
 
 class Graph {
 private:
-  int V;                      // No. of vertices
-  std::list<int> *adj;        // An array of adjacency lists
+  int V;                           // No. of vertices
+  std::list<int> *adj;             // An array of adjacency lists
   std::vector<Game> *const games_; // Reference to the vector of games
 
   // Fills Stack with vertices (in increasing order of finishing
@@ -21,10 +21,10 @@ private:
   void fillOrder(int v, std::vector<bool> &visited, std::stack<int> &Stack);
 
   // A recursive function to print DFS starting from v
-  void DFSUtil(int v, std::vector<bool>& visited);
+  void DFSUtil(int v, std::vector<bool> &visited);
 
   // A recursive function to push the DFS to a vector starting from v
-  void DFSUtil(int v, std::vector<bool>& visited, std::vector<int> &component);
+  void DFSUtil(int v, std::vector<bool> &visited, std::vector<int> &component);
 
 public:
   // constructor for creating empty graph with size V

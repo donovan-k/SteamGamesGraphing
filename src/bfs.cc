@@ -11,10 +11,10 @@ std::vector<int> BFSg::BFS(int index, int size) { // visits each vertex
   std::vector<int> result;
   result.reserve(size);
   std::vector<bool> wasVisited(vert, false);
-  std::queue<int> Q;        // creates a queue to keep track of the search
-  wasVisited[index] = true; // current node has been visited
-  Q.push(index);            // queue initial node
-  std::list<int>::iterator it;   // iterator to find adjacent vertecies
+  std::queue<int> Q;           // creates a queue to keep track of the search
+  wasVisited[index] = true;    // current node has been visited
+  Q.push(index);               // queue initial node
+  std::list<int>::iterator it; // iterator to find adjacent vertecies
   while (!Q.empty() &&
          result.size() < size) { // search through until queue is empty
     index = Q.front();           // set searcher to the front of  the queue
