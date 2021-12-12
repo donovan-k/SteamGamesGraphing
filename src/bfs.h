@@ -7,5 +7,5 @@ class BFSg {
   list<int> *al; // points to adjacency lists
 public:
   BFSg(Graph *graphx); // constructor
-  void BFS(int s);     // prints BFS traversal
+  std::vector<int> BFS(int index, int size);     // prints BFS traversal
 };

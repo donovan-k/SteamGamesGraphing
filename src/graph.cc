@@ -1,21 +1,18 @@
-#include <iostream>
 #include <list>
 #include <stack>
 
 #include "graph.h"
 
-using namespace std;
-
 // constructor for creating empty graph with size V
 Graph::Graph(int V) : games_(nullptr) {
   this->V = V;
-  adj = new list<int>[V];
+  adj = new std::list<int>[V];
 }
 
 // constructor for creating graph from vector of games
 Graph::Graph(vector<Game> *const games) : games_(games) {
   V = games->size();
-  adj = new list<int>[V];
+  adj = new std::list<int>[V];
 
   // goes through each game and compares it with every other game to
   // see if they are similar and put an edge between the index positions
@@ -34,26 +31,27 @@ Graph::Graph(vector<Game> *const games) : games_(games) {
 Graph::~Graph() { delete[] adj; }
 
 // A recursive function to print DFS starting from v
-void Graph::DFSUtil(int v, bool visited[]) {
+void Graph::DFSUtil(int v, std::vector<bool> &visited) {
   // Mark the current node as visited and print it
   visited[v] = true;
-  cout << v << " ";
+  // cout << v << " ";
 
   // Recur for all the vertices adjacent to this vertex
-  list<int>::iterator i;
+  std::list<int>::iterator i;
   for (i = adj[v].begin(); i != adj[v].end(); ++i)
     if (!visited[*i])
       DFSUtil(*i, visited);
 }
 
-void Graph::DFSUtil(int v, bool visited[], std::vector<int> &component) {
+void Graph::DFSUtil(int v, std::vector<bool> &visited,
+                    std::vector<int> &component) {
   // Mark the current node as visited and print it
   visited[v] = true;
   component.push_back(v);
   // cout << v << " ";
 
   // Recur for all the vertices adjacent to this vertex
-  list<int>::iterator i;
+  std::list<int>::iterator i;
   for (i = adj[v].begin(); i != adj[v].end(); ++i)
     if (!visited[*i])
       DFSUtil(*i, visited, component);
@@ -63,7 +61,7 @@ Graph Graph::getTranspose() {
   Graph g(V);
   for (int v = 0; v < V; v++) {
     // Recur for all the vertices adjacent to this vertex
-    list<int>::iterator i;
+    std::list<int>::iterator i;
     for (i = adj[v].begin(); i != adj[v].end(); ++i) {
       g.adj[*i].push_back(v);
     }
@@ -75,12 +73,12 @@ void Graph::addEdge(int v, int w) {
   adj[v].push_back(w); // Add w to v’s list.
 }
 
-void Graph::fillOrder(int v, bool visited[], stack<int> &s) {
+void Graph::fillOrder(int v, std::vector<bool>& visited, std::stack<int> &s) {
   // Mark the current node as visited and print it
   visited[v] = true;
 
   // Recur for all the vertices adjacent to this vertex
-  list<int>::iterator i;
+  std::list<int>::iterator i;
   for (i = adj[v].begin(); i != adj[v].end(); ++i)
     if (!visited[*i])
       fillOrder(*i, visited, s);
@@ -92,12 +90,10 @@ void Graph::fillOrder(int v, bool visited[], stack<int> &s) {
 // The main function that finds and prints all strongly connected
 // components
 void Graph::printSCCs() {
-  stack<int> s;
+  std::stack<int> s;
 
   // Mark all the vertices as not visited (For first DFS)
-  bool *visited = new bool[V];
-  for (int i = 0; i < V; i++)
-    visited[i] = false;
+  std::vector<bool> visited(V, false);
 
   // Fill vertices in stack according to their finishing times
   for (int i = 0; i < V; i++)
@@ -120,7 +116,7 @@ void Graph::printSCCs() {
     // Print Strongly connected component of the popped vertex
     if (visited[v] == false) {
       gr.DFSUtil(v, visited);
-      cout << endl;
+      // cout << endl;
     }
   }
 }
@@ -129,12 +125,10 @@ vector<vector<int>> Graph::getSCCs() {
 
   vector<vector<int>> SCCs;
 
-  stack<int> s;
+  std::stack<int> s;
 
   // Mark all the vertices as not visited (For first DFS)
-  bool *visited = new bool[V];
-  for (int i = 0; i < V; i++)
-    visited[i] = false;
+  std::vector<bool> visited(V, false);
 
   // Fill vertices in stack according to their finishing times
   for (int i = 0; i < V; i++)
@@ -159,7 +153,7 @@ vector<vector<int>> Graph::getSCCs() {
       std::vector<int> current_component;
       gr.DFSUtil(v, visited, current_component);
       SCCs.push_back(current_component);
-      cout << endl;
+      // cout << endl;
     }
   }
   return SCCs;
@@ -171,7 +165,7 @@ Game Graph::getGame(int index) const { return games_->at(index); }
 // Get games that are similar (have edges) to game at index ind
 vector<Game> Graph::getSimilarGames(int ind) const {
   // get the list of siimlar games
-  list<int> similar_indexes = adj[ind];
+  std::list<int> similar_indexes = adj[ind];
 
   // reserve space for the similar games vector
   vector<Game> similar_games;
@@ -194,7 +188,7 @@ vector<Game> Graph::getSimilarGames(int ind) const {
 // }
 
 bool Graph::areSimilar(int i, int j) const {
-  list<int> similar_games = adj[i];
+  std::list<int> similar_games = adj[i];
 
   for (int k : similar_games) {
     if (k == j) {
@@ -211,9 +205,7 @@ int Graph::size() const { return V; }
 
 bool Graph::isStronglyConnected() {
   // Mark all the vertices as not visited (For first DFS)
-  bool visited[V];
-  for (int i = 0; i < V; i++)
-    visited[i] = false;
+  std::vector<bool> visited(V, false);
 
   // Do DFS traversal starting from first vertex.
   DFSUtil(0, visited);

@@ -20,13 +20,13 @@ private:
   // Fills Stack with vertices (in increasing order of finishing
   // times). The top element of stack has the maximum finishing
   // time
-  void fillOrder(int v, bool visited[], std::stack<int> &Stack);
+  void fillOrder(int v, std::vector<bool> &visited, std::stack<int> &Stack);
 
   // A recursive function to print DFS starting from v
-  void DFSUtil(int v, bool visited[]);
+  void DFSUtil(int v, std::vector<bool>& visited);
 
   // A recursive function to push the DFS to a vector starting from v
-  void DFSUtil(int v, bool visited[], std::vector<int> &component);
+  void DFSUtil(int v, std::vector<bool>& visited, std::vector<int> &component);
 
 public:
   // constructor for creating empty graph with size V
