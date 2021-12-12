@@ -22,7 +22,12 @@ The BFS files contained the ability to traverse a strongly connected adjency lis
 provide the twenty titles which are closest to the inputted, as determined by the similar
 and strongly connected components portions. 
 
-### SCC Algorithm
+### Kosaraju's Algorithm for Strongly Connected Components
+This algorithm was used in the process of genre creation. Since our graph is created from a vector of Game objects with
+edges determined using the similar class, we can simply use the algorithm to find the strongly connected components of
+specific indices from the vector of Game objects. This then allows us to separate games into similar game genres.
+The output of the function that we used (getSCCs) gives us a 2D vector of integers that represent the index of a
+specific game from the vector of Game objects, with each inside vector being a separate genre of games. 
 
 ### Force Directed Graphing Algorithm
 The Force Directed Graphing algorithm was used in the process of interpreting the graph as an image.
