@@ -1,10 +1,11 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <unistd.h>
 #include <sys/wait.h>
+#include <unistd.h>
 #include <vector>
 
+#include "bfs.h"
 #include "force_drawing.h"
 #include "game.h"
 #include "graph.h"
@@ -29,12 +30,23 @@ int main(int argc, char *argv[]) {
   }
 
   Graph graph(&games);
+  BFSg bfsg(&graph);
 
   __pid_t pid = fork();
   if (pid == 0) {
     ForceDirectedDraw draw(&graph, 100, 100);
     draw.drawGraph("graph.png", 1);
     exit(0);
+  }
+
+  std::cout << "It looks like these groupings exist!\n";
+  const std::vector<std::vector<int>> sccs = graph.getSCCs();
+  int genre_num = 1;
+  for (const std::vector<int>& scc : sccs) {
+    std::cout << "\tGenre #" << (genre_num ++) << ":\n";
+    for (int index : scc) {
+      std::cout << "\t\t" << graph.getGame(index).name << "\n";
+    }
   }
 
   std::string query;
@@ -59,8 +71,10 @@ int main(int argc, char *argv[]) {
                    "Please ensure that you entered the title correctly.";
       continue;
     }
-    const vector<Game> &similar = graph.getSimilarGames(index);
-    for (const Game &g : similar) {
+    // BFS
+    std::cout << "These games are similar to " << query << "!\n";
+    for (const int similar_game_index : bfsg.BFS(index, 20)) {
+      const Game &g = graph.getGame(similar_game_index);
       std::cout << g.name << " by " << g.developer << ": " << g.desc_snippet
                 << "\n";
     }
