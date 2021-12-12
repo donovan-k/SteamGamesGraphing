@@ -1,6 +1,8 @@
 #include "Graph.h"
-#include<iostream>
-#include<list>
+#include "game.h"
+#include <list>
+#include <iostream>
+#include <string>
 using namespace std;
 class BFSg
 {
