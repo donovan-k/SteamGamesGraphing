@@ -7,12 +7,7 @@ BFSg::BFSg(Graph *graphx) {
   al = graphx->getAdjacencyList();
 }
 void BFSg::BFS(int s) { // visits each vertex
-  bool *wasVisited =
-      new bool[vert]; // makes pointer to an array keeping track of whether or
-                      // not the node has been checked
-  for (int i = 0; i < vert; i++)
-    wasVisited[i] = false; // goes through each of the nodes and sets their
-                           // visited value to unvisited
+  std::vector<bool> wasVisited(vert, false);
   list<int> Q;            // creates a queue to keep track of the search
   wasVisited[s] = true;   // current node has been visited
   Q.push_back(s);         // queue initial node
