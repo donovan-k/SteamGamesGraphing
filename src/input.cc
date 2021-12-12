@@ -12,6 +12,16 @@ std::string lex_token_string(std::deque<char> &buffer) {
   return {output.begin(), output.end()};
 }
 
+std::vector<std::string> lex_csv(const std::string& s) {
+  std::vector<std::string> result;
+  std::deque<char> buffer{s.begin(), s.end()};
+  std::string next;
+  while ((next = lex_token_string(buffer)) != "") {
+    result.push_back(next);
+  }
+  return result;
+}
+
 Game parse_game(const std::string &s) {
   Game game;
   std::deque<char> buffer(s.begin(), s.end());
@@ -24,9 +34,9 @@ Game parse_game(const std::string &s) {
   game.release_date = lex_token_string(buffer);
   game.developer = lex_token_string(buffer);
   game.publisher = lex_token_string(buffer);
-  game.popular_tags = lex_token_string(buffer);
-  game.game_details = lex_token_string(buffer);
-  game.languages = lex_token_string(buffer);
+  game.popular_tags = lex_csv(lex_token_string(buffer));
+  game.game_details = lex_csv(lex_token_string(buffer));
+  game.languages = lex_csv(lex_token_string(buffer));
   game.achievements = lex_token_string(buffer);
   game.genre = lex_token_string(buffer);
   game.game_description = lex_token_string(buffer);

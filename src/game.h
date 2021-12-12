@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <vector>
 #include <string>
 
 struct Game {
@@ -13,9 +14,9 @@ struct Game {
   std::string release_date;
   std::string developer;
   std::string publisher;
-  std::string popular_tags;
-  std::string game_details;
-  std::string languages;
+  std::vector<std::string> popular_tags;
+  std::vector<std::string> game_details;
+  std::vector<std::string> languages;
   std::string achievements;
   std::string genre;
   std::string game_description;

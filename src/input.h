@@ -3,9 +3,9 @@
 
 #include "game.h"
 #include <deque>
-#include <string>
 
 std::string lex_token_string(std::deque<char> &buffer);
+std::vector<std::string> lex_csv(std::string &s);
 Game parse_game(const std::string &s);
 
 #endif // INPUT_H
