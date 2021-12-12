@@ -1,32 +1,32 @@
 #include "bfs.h"
 #include "graph.h"
-#include <list>
+#include <vector>
+#include <queue>
 
 BFSg::BFSg(Graph *graphx) {
   vert = graphx->size(); // sets the size of the graph
   al = graphx->getAdjacencyList();
 }
-void BFSg::BFS(int s) { // visits each vertex
-  bool *wasVisited =
-      new bool[vert]; // makes pointer to an array keeping track of whether or
-                      // not the node has been checked
-  for (int i = 0; i < vert; i++)
-    wasVisited[i] = false; // goes through each of the nodes and sets their
-                           // visited value to unvisited
-  list<int> Q;            // creates a queue to keep track of the search
-  wasVisited[s] = true;   // current node has been visited
-  Q.push_back(s);         // queue initial node
+std::vector<int> BFSg::BFS(int index, int size) { // visits each vertex
+  std::vector<int> result;
+  result.reserve(size);
+  std::vector<bool> wasVisited(vert, false);
+  std::queue<int> Q;            // creates a queue to keep track of the search
+  wasVisited[index] = true;   // current node has been visited
+  Q.push(index);         // queue initial node
   list<int>::iterator it; // iterator to find adjacent vertecies
   while (!Q.empty()) {    // search through until queue is empty
-    s = Q.front();        // set searcher to the front of  the queue
+    index = Q.front();        // set searcher to the front of  the queue
     // cout << s << " \n";//textual feedback
-    Q.pop_front(); // remove from queue, it is being checked
-    for (it = al[s].begin(); it != al[s].end(); ++it) {
+    Q.pop(); // remove from queue, it is being checked
+    for (it = al[index].begin(); it != al[index].end(); ++it) {
       if (!wasVisited[*it]) {
         wasVisited[*it] =
             true; // if it has not been visited, mark as visited and queue it up
-        Q.push_back(*it);
+        Q.push(*it);
+        result.push_back(*it);
       }
     }
   }
+  return result;
 }

@@ -121,21 +121,21 @@ bool testBFS() {
   graphene.addEdge(0, 3);
   graphene.addEdge(4, 3);
   graphene.addEdge(3, 4); // print traversal from each
-  BFSg *graphen = new BFSg(&graphene);
+  BFSg graphen(&graphene);
   cout << "BFS starting with 1 \n";
-  graphen->BFS(1);
+  graphen.BFS(1, 1);
 
   cout << "BFS starting with 2 \n";
-  graphen->BFS(2);
+  graphen.BFS(2, 1);
 
   cout << "BFS starting with 3 \n";
-  graphen->BFS(3);
+  graphen.BFS(3, 1);
 
   cout << "BFS starting with 4 \n";
-  graphen->BFS(4);
+  graphen.BFS(4, 1);
 
   cout << "BFS starting with 0 \n";
-  graphen->BFS(0);
+  graphen.BFS(0, 1);
   return true;
 }
 
