@@ -37,7 +37,9 @@ int main(int argc, char* argv[]) {
     std::cout << std::endl;
     std::cout << std::endl;
   }
-
+  std::cout << "Recommendations based on user input: \n";
+  BFSg * graphene = new BFSg(graph);
+  graphene->BFS( 4, games);
   ForceDirectedDraw draw(graph, 100, 100);
   draw.drawGraph("graph.png", 1);
 
