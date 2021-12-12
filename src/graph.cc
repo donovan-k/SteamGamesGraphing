@@ -34,7 +34,7 @@ Graph::Graph(vector<Game> *const games) : games_(games) {
 Graph::~Graph() { delete[] adj; }
 
 // A recursive function to print DFS starting from v
-void Graph::DFSUtil(int v, bool visited[]) {
+void Graph::DFSUtil(int v, std::vector<bool> &visited) {
   // Mark the current node as visited and print it
   visited[v] = true;
   cout << v << " ";
@@ -46,7 +46,8 @@ void Graph::DFSUtil(int v, bool visited[]) {
       DFSUtil(*i, visited);
 }
 
-void Graph::DFSUtil(int v, bool visited[], std::vector<int> &component) {
+void Graph::DFSUtil(int v, std::vector<bool> &visited,
+                    std::vector<int> &component) {
   // Mark the current node as visited and print it
   visited[v] = true;
   component.push_back(v);
@@ -75,7 +76,7 @@ void Graph::addEdge(int v, int w) {
   adj[v].push_back(w); // Add w to v’s list.
 }
 
-void Graph::fillOrder(int v, bool visited[], stack<int> &s) {
+void Graph::fillOrder(int v, std::vector<bool>& visited, stack<int> &s) {
   // Mark the current node as visited and print it
   visited[v] = true;
 
@@ -95,9 +96,7 @@ void Graph::printSCCs() {
   stack<int> s;
 
   // Mark all the vertices as not visited (For first DFS)
-  bool *visited = new bool[V];
-  for (int i = 0; i < V; i++)
-    visited[i] = false;
+  std::vector<bool> visited(V, false);
 
   // Fill vertices in stack according to their finishing times
   for (int i = 0; i < V; i++)
@@ -132,9 +131,7 @@ vector<vector<int>> Graph::getSCCs() {
   stack<int> s;
 
   // Mark all the vertices as not visited (For first DFS)
-  bool *visited = new bool[V];
-  for (int i = 0; i < V; i++)
-    visited[i] = false;
+  std::vector<bool> visited(V, false);
 
   // Fill vertices in stack according to their finishing times
   for (int i = 0; i < V; i++)
@@ -211,9 +208,7 @@ int Graph::size() const { return V; }
 
 bool Graph::isStronglyConnected() {
   // Mark all the vertices as not visited (For first DFS)
-  bool visited[V];
-  for (int i = 0; i < V; i++)
-    visited[i] = false;
+  std::vector<bool> visited(V, false);
 
   // Do DFS traversal starting from first vertex.
   DFSUtil(0, visited);

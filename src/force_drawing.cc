@@ -1,4 +1,5 @@
 #include "force_drawing.h"
+#include <climits>
 #include <cmath>
 #include <random>
 
@@ -8,13 +9,14 @@ ForceDirectedDraw::ForceDirectedDraw(Graph *const graph, int width, int height)
   height_ = height;
 }
 
-vector<pair<int, int>> ForceDirectedDraw::drawGraph(const string &filename,
-                                                    int iterations) {
+vector<pair<float, float>> ForceDirectedDraw::drawGraph(const string &filename,
+                                                        int iterations) {
   // method uses the barycentric method to draw graph
   const std::list<int> *adj_list = graph_->getAdjacencyList();
-  std::cout << graph_->size() << std::endl;
-  float area = width_ * height_;
-  vector<pair<int, int>> vector_pos = generateRandomPositions(graph_->size());
+  // std::cout << graph_->size() << std::endl;
+  float area = float(width_) * float(height_);
+  vector<pair<float, float>> vector_pos =
+      generateRandomPositions(graph_->size());
 
   // values for computation
   float k = std::sqrt(area / graph_->size());
@@ -22,8 +24,8 @@ vector<pair<int, int>> ForceDirectedDraw::drawGraph(const string &filename,
   displacment.resize(graph_->size(), pair<float, float>(0.0, 0.0));
 
   // min and max position holders
-  pair<int, int> min(INT32_MAX, INT32_MAX);
-  pair<int, int> max(INT32_MIN, INT32_MIN);
+  pair<float, float> min(INFINITY, INFINITY);
+  pair<float, float> max(-INFINITY, -INFINITY);
 
   float temp = std::log10(iterations);
   for (int t = 0; t < iterations; t++) {
@@ -108,9 +110,9 @@ vector<pair<int, int>> ForceDirectedDraw::drawGraph(const string &filename,
   return vector_pos;
 }
 
-void ForceDirectedDraw::normalizePositions(vector<pair<int, int>> &positions,
-                                           pair<int, int> &min,
-                                           pair<int, int> &max) {
+void ForceDirectedDraw::normalizePositions(
+    vector<pair<float, float>> &positions, pair<float, float> &min,
+    pair<float, float> &max) {
   for (int p = 0; p < positions.size(); p++) {
     double pf =
         ((double)(positions[p].first - min.first) / (max.first - min.first)) *
@@ -123,34 +125,37 @@ void ForceDirectedDraw::normalizePositions(vector<pair<int, int>> &positions,
   }
 }
 
-void ForceDirectedDraw::drawPositions(const vector<pair<int, int>> &positions,
-                                      const string &filename) {
-  PNG *png = new PNG(width_, height_);
+void ForceDirectedDraw::drawPositions(
+    const vector<pair<float, float>> &positions, const string &filename) {
+  static const int BLOCK_SIZE = 10;
+  PNG png(BLOCK_SIZE * width_, BLOCK_SIZE * height_);
 
   // go through each position and color that pixel a random color
-  int pixel_size = width_ * height_ / (1000);
-  double h = 0;
-  for (auto pos : positions) {
-    std::random_device rd;
-    std::mt19937 e2(rd());
-    std::uniform_real_distribution<> dist(0, 360);
-    h = dist(e2);
-    HSLAPixel pixel_copy(h, 1, 0.5, 0.99);
-    HSLAPixel &pixel = png->getPixel(pos.first, pos.second);
-
-    pixel = pixel_copy;
+  static std::random_device rd;
+  static std::mt19937 e2(rd());
+  static std::uniform_real_distribution<> dist(0, 360);
+  for (const auto &pos : positions) {
+    int hue = int(dist(e2));
+    for (int x = 0; x < BLOCK_SIZE; x++) {
+      for (int y = 0; y < BLOCK_SIZE; y++) {
+        png.getPixel(int(pos.first * BLOCK_SIZE) + x,
+                     int(pos.second * BLOCK_SIZE) + y) =
+            HSLAPixel(hue, 1, 0.5, 0.99);
+      }
+    }
   }
 
-  png->writeToFile(filename);
+  png.writeToFile(filename);
 }
 
-vector<pair<int, int>> ForceDirectedDraw::generateRandomPositions(int size) {
-  vector<pair<int, int>> positions;
+vector<pair<float, float>>
+ForceDirectedDraw::generateRandomPositions(int size) {
+  vector<pair<float, float>> positions;
   positions.reserve(size);
 
   for (int i = 0; i < width_; i++) {
     for (int j = 0; j < height_; j++) {
-      pair<int, int> pos(i, j);
+      pair<float, float> pos(i, j);
       positions.push_back(pos);
     }
   }
@@ -170,7 +175,7 @@ vector<pair<int, int>> ForceDirectedDraw::generateRandomPositions(int size) {
   auto last = positions.begin() + size;
 
   // Copy the element
-  vector<pair<int, int>> positions_(first, last);
+  vector<pair<float, float>> positions_(first, last);
 
   return positions_;
 }
@@ -183,8 +188,8 @@ float ForceDirectedDraw::attrForce(float force, float k) {
   return force * force / k;
 }
 
-pair<float, float> ForceDirectedDraw::unitVector(const pair<int, int> &pos1,
-                                                 const pair<int, int> pos2,
+pair<float, float> ForceDirectedDraw::unitVector(const pair<float, float> &pos1,
+                                                 const pair<float, float> pos2,
                                                  bool unit) {
   pair<float, float> unit_vector(pos2.first - pos1.first,
                                  pos2.second - pos1.second);
