@@ -16,12 +16,12 @@ public:
    * Use 0.8 tolerance for more strict (less similar games for each game).
    */
   static bool areSimilar(const Game &game1, const Game &game2,
-                         double tolerance);
+                         float tolerance);
 
   static std::vector<std::string> getToken(const std::string &str,
                                            char delimiter);
 
-  static double compareTokens(const std::vector<std::string> &tag1,
+  static float compareTokens(const std::vector<std::string> &tag1,
                               const std::vector<std::string> &tag2);
 };
 
