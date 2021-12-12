@@ -1,11 +1,11 @@
-Introduction
+## Introduction
 This project, steamer, is a program which generates game recommendations
 based on provided tags, and develops a visualization of the similarities of
 games. This is accomplished by first developing graphs of similar games, and 
 creating a force directed graph of those graphs and by performing BFS traversal 
 of a strongly connected components graph
 
-Overview
+## Overview
 The program first creates a vector of games, then generates a strongly connected 
 components graph and BFS traversal graph of that vector. It will the draw the graph 
 using the force directed method and save that graph as a .png file. From there, it 
@@ -14,15 +14,23 @@ opportunity to enter the title of a game. The program will receive the file, com
 it to the vector of games, and generate an index. The index is used in a BFS traversal 
 to output the twenty most similar games.
 
-Individual discussions
+## Individual discussions
 
-BFS
+### BFS Traversal
 The Breadth First Search algorithm was used in the process of game recommendation.
 The BFS files contained the ability to traverse a strongly connected adjency list to
 provide the twenty titles which are closest to the inputted, as determined by the similar
 and strongly connected components portions. 
 
-Conclusion
+### SCC Algorithm
+
+### Force Directed Graphing Algorithm
+The Force Directed Graphing algorithm was used in the process of interpreting the graph as an image.
+It uses the algorithm from https://cs.brown.edu/people/rtamassi/gdhandbook/chapters/force-directed.pdf page 5 to 
+move positions of graph nodes based on their edges with each other. The output of this function produces a png image
+that is saved in whatever file is stated in the main program (usually graph.png).
+
+## Conclusion
 This project was an exercise in the production of a complete program, beginning with the
 idea of what we want it to do, and then creating features and methods to achieve that goal.
 This process gave great insight in not only the creation processes of programming and data 
