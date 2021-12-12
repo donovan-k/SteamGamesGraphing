@@ -9,7 +9,9 @@ BFSg::BFSg(Graph * graphx){
   vert = graphx->size();//sets the size of the graph
   al = graphx->getAdjacencyList();
 }
+
 void BFSg::BFS(int s, vector<Game> games){//visits each vertex
+
   bool *wasVisited = new bool[vert];//makes pointer to an array keeping track of whether or not the node has been checked
   for(int i = 0; i < vert; i++)
     wasVisited[i] = false;//goes through each of the nodes and sets their visited value to unvisited

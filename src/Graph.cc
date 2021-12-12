@@ -49,6 +49,19 @@ void Graph::DFSUtil(int v, bool visited[]) {
       DFSUtil(*i, visited);
 }
 
+void Graph::DFSUtil(int v, bool visited[], std::vector<int> & component) {
+  // Mark the current node as visited and print it
+  visited[v] = true;
+  component.push_back(v);
+  // cout << v << " ";
+
+  // Recur for all the vertices adjacent to this vertex
+  list<int>::iterator i;
+  for (i = adj[v].begin(); i != adj[v].end(); ++i)
+    if (!visited[*i])
+      DFSUtil(*i, visited, component);
+}
+
 Graph Graph::getTranspose() {
   Graph g(V);
   for (int v = 0; v < V; v++) {
@@ -115,6 +128,46 @@ void Graph::printSCCs() {
   }
 }
 
+vector<vector<int>> Graph::getSCCs() {
+
+  vector<vector<int>> SCCs;
+
+  stack<int> s;
+
+  // Mark all the vertices as not visited (For first DFS)
+  bool *visited = new bool[V];
+  for (int i = 0; i < V; i++)
+    visited[i] = false;
+
+  // Fill vertices in stack according to their finishing times
+  for (int i = 0; i < V; i++)
+    if (visited[i] == false)
+      fillOrder(i, visited, s);
+
+  // Create a reversed graph
+  Graph gr = getTranspose();
+
+  // Mark all the vertices as not visited (For second DFS)
+  for (int i = 0; i < V; i++)
+    visited[i] = false;
+
+  // Now process all vertices in order defined by Stack
+  while (!s.empty()) {
+    // Pop a vertex from stack
+    int v = s.top();
+    s.pop();
+
+    // Print Strongly connected component of the popped vertex
+    if (visited[v] == false) {
+      std::vector<int> current_component;
+      gr.DFSUtil(v, visited, current_component);
+      SCCs.push_back(current_component);
+      cout << endl;
+    }
+  }
+  return SCCs;
+}
+
 // Get game from index position
 Game Graph::getGame(int index) const {
   return games_->at(index);
@@ -161,4 +214,39 @@ std::list<int> * Graph::getAdjacencyList() {
 
 int Graph::size() const {
   return V;
+}
+
+bool Graph::isStronglyConnected()
+{
+    //Mark all the vertices as not visited (For first DFS)
+    bool visited[V];
+    for (int i = 0; i < V; i++)
+        visited[i] = false;
+ 
+    //Do DFS traversal starting from first vertex.
+    DFSUtil(0, visited);
+ 
+     // If DFS traversal doesn’t visit all vertices, then return false.
+    for (int i = 0; i < V; i++)
+        if (visited[i] == false)
+             return false;
+ 
+    //Creates a reversed graph
+    Graph gr = getTranspose();
+ 
+    //Mark all the vertices as not visited (For second DFS)
+    for(int i = 0; i < V; i++)
+        visited[i] = false;
+ 
+    //Do DFS for reversed graph starting from first vertex.
+    // Starting Vertex must be same starting point of first DFS
+    gr.DFSUtil(0, visited);
+ 
+    // If all vertices are not visited in second DFS, then
+    // return false
+    for (int i = 0; i < V; i++)
+        if (visited[i] == false)
+             return false;
+ 
+    return true;
 }

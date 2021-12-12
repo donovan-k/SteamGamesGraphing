@@ -3,10 +3,11 @@
 ## Team Contract (dkitten2, pganot2, jmliao2, shackma2)
 
 ### Communication
+
 1. Team Meetings: Our team will meet once a week every Wednesday from 5 pm to 6 pm on Discord or Zoom.
-We can collaboratively add notes and todos on a Google Document every week to 
-point us in the direction for the week. We will designate a different person every week to
-draft the weekly DEVELOPMENT LOG entry which will be overlooked by the group. 
+We can collaboratively add notes and to-dos on a Google Document every week to 
+point us in the direction for the week. We will update the weekly development log entry if any changes
+were made. 
 
 2. Assistance: Each team member can be contacted through their Illinois email or
 direct message on Discord. Team communication will be done through our group DM
@@ -19,6 +20,7 @@ a chance to speak their opinions about the project. By signing this document, ea
 member will adhere to the decisions made, even if they personally disagree with them.
 
 ### Collaboration
+
 1. Work Distribution: Each week, the neccessary delivarables for the week will be
 determined by the whole team and members can volunteer for which one they want. 
 As a team, we commit to pushing for fairness in the work load. If one feels otherwise,
@@ -39,7 +41,7 @@ to entire group. If conflicts are still not resolved, then the winner will be de
 by coin or dice depending on how many sides their are.
 
 ### Signatures
-PJ Ganotisi (pganot2),
+Patrick Joshua (PJ) Ganotisi (pganot2),
 Alex Liao (jmliao2),
 Donovan Kitten (dkitten2),
 Stan Hackman (shackma2)
