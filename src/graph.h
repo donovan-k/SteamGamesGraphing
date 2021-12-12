@@ -9,13 +9,11 @@
 #include "game.h"
 #include "similar.h"
 
-using std::vector;
-
 class Graph {
 private:
-  int V;                      // No. of vertices
-  std::list<int> *adj;        // An array of adjacency lists
-  vector<Game> *const games_; // Reference to the vector of games
+  int V;                           // No. of vertices
+  std::list<int> *adj;             // An array of adjacency lists
+  std::vector<Game> *const games_; // Reference to the vector of games
 
   // Fills Stack with vertices (in increasing order of finishing
   // times). The top element of stack has the maximum finishing
@@ -23,17 +21,17 @@ private:
   void fillOrder(int v, std::vector<bool> &visited, std::stack<int> &Stack);
 
   // A recursive function to print DFS starting from v
-  void DFSUtil(int v, std::vector<bool>& visited);
+  void DFSUtil(int v, std::vector<bool> &visited);
 
   // A recursive function to push the DFS to a vector starting from v
-  void DFSUtil(int v, std::vector<bool>& visited, std::vector<int> &component);
+  void DFSUtil(int v, std::vector<bool> &visited, std::vector<int> &component);
 
 public:
   // constructor for creating empty graph with size V
   Graph(int V);
 
   // constructor for creating graph from vector of games
-  Graph(vector<Game> *const games);
+  Graph(std::vector<Game> *const games);
 
   // destructor
   ~Graph();
@@ -46,7 +44,7 @@ public:
   void printSCCs();
 
   /* Function that returns a vector of vectors of strongly connected integers */
-  vector<vector<int>> getSCCs();
+  std::vector<std::vector<int>> getSCCs();
 
   // Function that returns reverse (or transpose) of this graph
   Graph getTranspose();

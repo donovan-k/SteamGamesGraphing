@@ -2,6 +2,7 @@
 #include <climits>
 #include <cmath>
 #include <random>
+#include <vector>
 
 ForceDirectedDraw::ForceDirectedDraw(Graph *const graph, int width, int height)
     : graph_(graph) {
@@ -9,188 +10,151 @@ ForceDirectedDraw::ForceDirectedDraw(Graph *const graph, int width, int height)
   height_ = height;
 }
 
-vector<pair<float, float>> ForceDirectedDraw::drawGraph(const string &filename,
-                                                        int iterations) {
+std::vector<std::pair<float, float>>
+ForceDirectedDraw::computePositions(int iterations) {
   // method uses the barycentric method to draw graph
   const std::list<int> *adj_list = graph_->getAdjacencyList();
-  // std::cout << graph_->size() << std::endl;
-  float area = float(width_) * float(height_);
-  vector<pair<float, float>> vector_pos =
+
+  const float area = float(width_ * height_);
+  const float k = std::sqrt(area / graph_->size());
+
+  std::vector<std::pair<float, float>> position =
       generateRandomPositions(graph_->size());
+  std::vector<std::pair<float, float>> displacment(graph_->size());
 
-  // values for computation
-  float k = std::sqrt(area / graph_->size());
-  vector<pair<float, float>> displacment(graph_->size(), {0.0, 0.0});
-
-  // min and max position holders
-  pair<float, float> min(INFINITY, INFINITY);
-  pair<float, float> max(-INFINITY, -INFINITY);
-
-  float temp = std::log10(iterations);
-  for (int t = 0; t < iterations; t++) {
+  float temp = 0.5f * float(std::min(width_, height_));
+  const float cool = temp / iterations;
+  for (int i = 0; i < iterations; i++) {
     // calculate repulsive forces
-    for (int v = 0; v < vector_pos.size(); v++) {
-      displacment[v].first = 0.0;
-      displacment[v].second = 0.0;
-      for (int u = 0; u < vector_pos.size(); u++) {
-        if (v == u)
+    for (int v = 0; v < position.size(); v++) {
+      displacment[v] = {0.0, 0.0};
+      for (int u = 0; u < position.size(); u++) {
+        if (v == u) {
           continue;
+        }
         // calculate difference vector and unit vector
-        pair<float, float> diff_vec =
-            unitVector(vector_pos[v], vector_pos[u], false);
-        pair<float, float> unit_vec =
-            unitVector(vector_pos[v], vector_pos[u], true);
-        float magnitude = std::sqrt(diff_vec.first * diff_vec.first +
-                                    diff_vec.second * diff_vec.second);
-
+        const std::pair<float, float> diff = {
+            position[v].first - position[u].first,
+            position[v].second - position[u].second,
+        };
+        const float diff_mag =
+            std::sqrt(diff.first * diff.first + diff.second * diff.second);
+        if (diff_mag == 0.0) {
+          continue;
+        }
+        const std::pair<float, float> diff_norm = {
+            diff.first / diff_mag,
+            diff.second / diff_mag,
+        };
         // find the displacement vector
-        displacment[v].first += unit_vec.first * repulsiveForce(magnitude, k);
-        displacment[v].second += unit_vec.second * repulsiveForce(magnitude, k);
+        const float force = k * k / diff_mag;
+        displacment[v].first += diff_norm.first * force;
+        displacment[v].second += diff_norm.second * force;
       }
     }
 
     // calculate attractive forces
-    for (int i = 0; i < graph_->size(); i++) {
-      const std::list<int> &v_list = adj_list[i];
-      for (const int edge : v_list) {
+    for (int v = 0; v < graph_->size(); v++) {
+      const std::list<int> &v_list = adj_list[v];
+      for (const int u : v_list) {
         // calculate difference vector and unit vector for vector i
-        pair<float, float> diff_vec =
-            unitVector(vector_pos[i], vector_pos[edge], false);
-        pair<float, float> unit_vec =
-            unitVector(vector_pos[i], vector_pos[edge], true);
-        float magnitude = std::sqrt(diff_vec.first * diff_vec.first +
-                                    diff_vec.second * diff_vec.second);
-
+        const std::pair<float, float> diff_vec = {
+            position[v].first - position[u].first,
+            position[v].second - position[u].second,
+        };
+        const float diff_mag = std::sqrt(diff_vec.first * diff_vec.first +
+                                         diff_vec.second * diff_vec.second);
+        if (diff_mag == 0.0) {
+          continue;
+        }
+        const std::pair<float, float> diff_norm = {
+            diff_vec.first / diff_mag,
+            diff_vec.second / diff_mag,
+        };
+        const float force = diff_mag * diff_mag / k;
         // find the displacement vector for vector i
-        displacment[i].first -= unit_vec.first * attrForce(magnitude, k);
-        displacment[i].second -= unit_vec.second * attrForce(magnitude, k);
+        displacment[v].first -= diff_norm.first * force;
+        displacment[v].second -= diff_norm.second * force;
 
         // find the displacement vector for vector edge
-        displacment[edge].first += unit_vec.first * attrForce(magnitude, k);
-        displacment[edge].second += unit_vec.second * attrForce(magnitude, k);
+        displacment[u].first += diff_norm.first * force;
+        displacment[u].second += diff_norm.first * force;
       }
     }
 
     // adjust position of each vertex
     for (int v = 0; v < graph_->size(); v++) {
-      pair<float, float> v_disp = displacment[v];
-      float magnitude = std::sqrt(v_disp.first * v_disp.first +
-                                  v_disp.second * v_disp.second);
+      const std::pair<float, float> disp = displacment[v];
+      const float disp_mag =
+          std::sqrt(disp.first * disp.first + disp.second * disp.second);
+      if (disp_mag == 0.0) {
+        continue;
+      }
+      const std::pair<float, float> disp_norm = {
+          disp.first / disp_mag,
+          disp.second / disp_mag,
+      };
 
-      // adjust position of vertex v
-      vector_pos[v].first +=
-          (v_disp.first / magnitude) * std::min(v_disp.first, temp);
-      vector_pos[v].second +=
-          (v_disp.second / magnitude) * std::min(v_disp.second, temp);
+      position[v].first += disp_norm.first * temp;
+      position[v].second += disp_norm.second * temp;
 
-      // find min and max of positions
-      if (vector_pos[v].first < min.first) {
-        min.first = vector_pos[v].first;
-      }
-      if (vector_pos[v].first > max.first) {
-        max.first = vector_pos[v].first;
-      }
-      if (vector_pos[v].second < min.second) {
-        min.second = vector_pos[v].second;
-      }
-      if (vector_pos[v].second > max.second) {
-        max.second = vector_pos[v].second;
-      }
+      // keep the vertex in bounds
+      position[v] = {
+          std::min(width_ / 2.0f, std::max(-width_ / 2.0f, position[v].first)),
+          std::min(height_ / 2.0f,
+                   std::max(-height_ / 2.0f, position[v].second)),
+      };
     }
 
     // cool the temp down as the layout approaches a better config
-    temp -= std::log10(iterations) / iterations;
+    temp -= cool;
   }
 
-  normalizePositions(vector_pos, min, max);
-
-  drawPositions(vector_pos, filename);
-
-  return vector_pos;
+  return position;
 }
 
-void ForceDirectedDraw::normalizePositions(
-    vector<pair<float, float>> &positions, pair<float, float> &min,
-    pair<float, float> &max) {
-  for (int p = 0; p < positions.size(); p++) {
-    double pf =
-        ((double)(positions[p].first - min.first) / (max.first - min.first)) *
-        (width_ - 1);
-    double ps = ((double)(positions[p].second - min.second) /
-                 (max.second - min.second)) *
-                (height_ - 1);
-    positions[p].first = pf;
-    positions[p].second = ps;
-  }
-}
-
-void ForceDirectedDraw::drawPositions(
-    const vector<pair<float, float>> &positions, const string &filename) {
-  static const float BLOCK_SIZE = 10.0;
-  static const float DOT_SIZE = 5.0;
-  PNG png(BLOCK_SIZE * width_, BLOCK_SIZE * height_);
+cs225::PNG ForceDirectedDraw::drawPositions(
+    const std::vector<std::pair<float, float>> &positions) {
+  static const float DOT_SIZE = float(std::min(width_, height_)) / 100.0;
+  cs225::PNG png(width_, height_);
 
   // go through each position and color that pixel a random color
   static std::random_device rd;
   static std::default_random_engine rng(rd());
   static std::uniform_real_distribution<> dist(0, 360);
   for (const auto &pos : positions) {
-    int hue = int(dist(rng));
-    for (int x = 0; x < DOT_SIZE; x++) {
-      for (int y = 0; y < DOT_SIZE; y++) {
-        png.getPixel(
-            int(pos.first * BLOCK_SIZE) + (BLOCK_SIZE - DOT_SIZE) / 2 + x,
-            int(pos.second * BLOCK_SIZE) + (BLOCK_SIZE - DOT_SIZE) / 2 + y) =
-            HSLAPixel(hue, 1, 0.5, 0.99);
+    const int hue = int(dist(rng));
+    const int minx = (width_ / 2.0 + pos.first) - DOT_SIZE / 2.0;
+    const int miny = (height_ / 2.0 + pos.second) - DOT_SIZE / 2.0;
+    for (int x = minx; x < minx + DOT_SIZE; x++) {
+      if (x < 0 || x >= width_) {
+        continue;
+      }
+      for (int y = miny; y < miny + DOT_SIZE; y++) {
+        if (y < 0 || y >= height_) {
+          continue;
+        }
+        png.getPixel(x, y) = cs225::HSLAPixel(hue, 1, 0.5, 1.0);
       }
     }
   }
 
-  png.writeToFile(filename);
+  return png;
 }
 
-vector<pair<float, float>>
+std::vector<std::pair<float, float>>
 ForceDirectedDraw::generateRandomPositions(int size) {
-  vector<pair<float, float>> positions;
+  std::vector<std::pair<float, float>> positions;
   positions.reserve(size);
 
   // random things
   static std::random_device rd;
   static std::default_random_engine rng(rd());
-  static std::uniform_real_distribution<> w_dist(0, width_);
-  static std::uniform_real_distribution<> h_dist(0, width_);
+  std::uniform_real_distribution<> w_dist(-width_ / 2.0f, width_ / 2.0f);
+  std::uniform_real_distribution<> h_dist(-height_ / 2.0f, height_ / 2.0f);
   for (int i = 0; i < size; i++) {
     positions.push_back({w_dist(rng), h_dist(rng)});
   }
 
   return positions;
-}
-
-float ForceDirectedDraw::repulsiveForce(float force, float k) {
-  return k * k / force;
-}
-
-float ForceDirectedDraw::attrForce(float force, float k) {
-  return force * force / k;
-}
-
-pair<float, float> ForceDirectedDraw::unitVector(const pair<float, float> &pos1,
-                                                 const pair<float, float> pos2,
-                                                 bool unit) {
-  pair<float, float> unit_vector(pos2.first - pos1.first,
-                                 pos2.second - pos1.second);
-
-  // if not wanting unit vector return difference vector
-  if (unit == false) {
-    return unit_vector;
-  }
-
-  // otherwise return a unit vector between vertices
-  float magnitude = unit_vector.first * unit_vector.first +
-                    unit_vector.second * unit_vector.second;
-  magnitude = std::sqrt(magnitude);
-  unit_vector.first /= magnitude;
-  unit_vector.second /= magnitude;
-
-  return unit_vector;
 }
