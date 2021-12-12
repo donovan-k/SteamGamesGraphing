@@ -6,17 +6,16 @@
 #include <stack>
 #include <vector>
 
-#include "similar.h"
 #include "game.h"
+#include "similar.h"
 
 using std::vector;
 
 class Graph {
 private:
-  int V;                        // No. of vertices
-  std::list<int> *adj;          // An array of adjacency lists
-  vector<Game> * const games_;   // Reference to the vector of games
-  
+  int V;                      // No. of vertices
+  std::list<int> *adj;        // An array of adjacency lists
+  vector<Game> *const games_; // Reference to the vector of games
 
   // Fills Stack with vertices (in increasing order of finishing
   // times). The top element of stack has the maximum finishing
@@ -25,17 +24,17 @@ private:
 
   // A recursive function to print DFS starting from v
   void DFSUtil(int v, bool visited[]);
-  
+
   // A recursive function to push the DFS to a vector starting from v
-  void DFSUtil(int v, bool visited[], std::vector<int> & component);
+  void DFSUtil(int v, bool visited[], std::vector<int> &component);
 
 public:
   // constructor for creating empty graph with size V
   Graph(int V);
 
   // constructor for creating graph from vector of games
-  Graph(vector<Game> * const games);
-  
+  Graph(vector<Game> *const games);
+
   // destructor
   ~Graph();
 
@@ -65,7 +64,7 @@ public:
   bool areSimilar(int i, int j) const;
 
   // Get method for adjacency list
-  std::list<int> * getAdjacencyList();
+  std::list<int> *getAdjacencyList();
 
   // returns the number of vertices in the adjacency list
   int size() const;

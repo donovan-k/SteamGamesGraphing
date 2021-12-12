@@ -1,6 +1,6 @@
 #include "csv.h"
 
-void lex_token(std::deque<char>& buffer, std::deque<char>& output) {
+void lex_token(std::deque<char> &buffer, std::deque<char> &output) {
   if (buffer.empty()) {
     return;
   }
@@ -22,7 +22,7 @@ void lex_token(std::deque<char>& buffer, std::deque<char>& output) {
   lex_token(buffer, output);
 }
 
-void lex_string(std::deque<char>& buffer, std::deque<char>& output) {
+void lex_string(std::deque<char> &buffer, std::deque<char> &output) {
   if (buffer.empty()) {
     return;
   }
@@ -44,7 +44,7 @@ void lex_string(std::deque<char>& buffer, std::deque<char>& output) {
   lex_string(buffer, output);
 }
 
-void lex_escape(std::deque<char>& buffer, std::deque<char>& output) {
+void lex_escape(std::deque<char> &buffer, std::deque<char> &output) {
   if (buffer.empty()) {
     return;
   }

@@ -6,13 +6,13 @@
 #include "csv.h"
 #include "game.h"
 
-std::string lex_token_string(std::deque<char>& buffer) {
+std::string lex_token_string(std::deque<char> &buffer) {
   std::deque<char> output;
   lex_token(buffer, output);
   return {output.begin(), output.end()};
 }
 
-Game parse_game(const std::string& s) {
+Game parse_game(const std::string &s) {
   Game game;
   std::deque<char> buffer(s.begin(), s.end());
   game.url = lex_token_string(buffer);

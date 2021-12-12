@@ -3,20 +3,20 @@
 #include <string>
 #include <vector>
 
-#include "game.h"
-#include "input.h"
-#include "Graph.h"
 #include "force_drawing.h"
+#include "game.h"
+#include "graph.h"
+#include "input.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   std::vector<Game> games;
 
   std::string line;
   for (std::size_t i = 1; i < argc; ++i) {
     std::ifstream fin(argv[i]);
     if (!fin.is_open()) {
-      std::cerr << argv[0] << ": cannot open '" << argv[i] <<
-        "' for reading: No such file or directory\n";
+      std::cerr << argv[0] << ": cannot open '" << argv[i]
+                << "' for reading: No such file or directory\n";
       abort();
     }
 
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  Graph * graph = new Graph(&games);
+  Graph *graph = new Graph(&games);
 
   for (int i = 0; i < graph->size(); i++) {
     vector<Game> gs = graph->getSimilarGames(i);
@@ -40,5 +40,4 @@ int main(int argc, char* argv[]) {
 
   ForceDirectedDraw draw(graph, 100, 100);
   draw.drawGraph("graph.png", 1);
-
 }

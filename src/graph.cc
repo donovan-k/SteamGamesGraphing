@@ -2,28 +2,27 @@
 #include <list>
 #include <stack>
 
-#include "Graph.h"
+#include "graph.h"
 
 using namespace std;
 
 // constructor for creating empty graph with size V
-Graph::Graph(int V) :
-  games_(nullptr) {
+Graph::Graph(int V) : games_(nullptr) {
   this->V = V;
   adj = new list<int>[V];
 }
 
 // constructor for creating graph from vector of games
-Graph::Graph(vector<Game> * const games)
-  : games_(games){
+Graph::Graph(vector<Game> *const games) : games_(games) {
   V = games->size();
   adj = new list<int>[V];
 
-  // goes through each game and compares it with every other game to 
+  // goes through each game and compares it with every other game to
   // see if they are similar and put an edge between the index positions
   for (int i = 0; i < V; i++) {
     for (int j = 0; j < V; j++) {
-      if (i == j) continue;
+      if (i == j)
+        continue;
       if (Similar::areSimilar(games->at(i), games->at(j), 0.9)) {
         addEdge(i, j);
       }
@@ -32,9 +31,7 @@ Graph::Graph(vector<Game> * const games)
 }
 
 // destructor
-Graph::~Graph() {
-  delete[] adj;
-}
+Graph::~Graph() { delete[] adj; }
 
 // A recursive function to print DFS starting from v
 void Graph::DFSUtil(int v, bool visited[]) {
@@ -49,7 +46,7 @@ void Graph::DFSUtil(int v, bool visited[]) {
       DFSUtil(*i, visited);
 }
 
-void Graph::DFSUtil(int v, bool visited[], std::vector<int> & component) {
+void Graph::DFSUtil(int v, bool visited[], std::vector<int> &component) {
   // Mark the current node as visited and print it
   visited[v] = true;
   component.push_back(v);
@@ -169,9 +166,7 @@ vector<vector<int>> Graph::getSCCs() {
 }
 
 // Get game from index position
-Game Graph::getGame(int index) const {
-  return games_->at(index);
-}
+Game Graph::getGame(int index) const { return games_->at(index); }
 
 // Get games that are similar (have edges) to game at index ind
 vector<Game> Graph::getSimilarGames(int ind) const {
@@ -182,7 +177,7 @@ vector<Game> Graph::getSimilarGames(int ind) const {
   vector<Game> similar_games;
   similar_games.reserve(similar_indexes.size());
 
-  // from the index of the similar game extract the game object 
+  // from the index of the similar game extract the game object
   // associated with it
   for (int i : similar_indexes) {
     similar_games.push_back(games_->at(i));
@@ -202,51 +197,48 @@ bool Graph::areSimilar(int i, int j) const {
   list<int> similar_games = adj[i];
 
   for (int k : similar_games) {
-    if (k == j) {return true;}
+    if (k == j) {
+      return true;
+    }
   }
 
   return false;
 }
 
-std::list<int> * Graph::getAdjacencyList() {
-  return adj;
-}
+std::list<int> *Graph::getAdjacencyList() { return adj; }
 
-int Graph::size() const {
-  return V;
-}
+int Graph::size() const { return V; }
 
-bool Graph::isStronglyConnected()
-{
-    //Mark all the vertices as not visited (For first DFS)
-    bool visited[V];
-    for (int i = 0; i < V; i++)
-        visited[i] = false;
- 
-    //Do DFS traversal starting from first vertex.
-    DFSUtil(0, visited);
- 
-     // If DFS traversal doesn’t visit all vertices, then return false.
-    for (int i = 0; i < V; i++)
-        if (visited[i] == false)
-             return false;
- 
-    //Creates a reversed graph
-    Graph gr = getTranspose();
- 
-    //Mark all the vertices as not visited (For second DFS)
-    for(int i = 0; i < V; i++)
-        visited[i] = false;
- 
-    //Do DFS for reversed graph starting from first vertex.
-    // Starting Vertex must be same starting point of first DFS
-    gr.DFSUtil(0, visited);
- 
-    // If all vertices are not visited in second DFS, then
-    // return false
-    for (int i = 0; i < V; i++)
-        if (visited[i] == false)
-             return false;
- 
-    return true;
+bool Graph::isStronglyConnected() {
+  // Mark all the vertices as not visited (For first DFS)
+  bool visited[V];
+  for (int i = 0; i < V; i++)
+    visited[i] = false;
+
+  // Do DFS traversal starting from first vertex.
+  DFSUtil(0, visited);
+
+  // If DFS traversal doesn’t visit all vertices, then return false.
+  for (int i = 0; i < V; i++)
+    if (visited[i] == false)
+      return false;
+
+  // Creates a reversed graph
+  Graph gr = getTranspose();
+
+  // Mark all the vertices as not visited (For second DFS)
+  for (int i = 0; i < V; i++)
+    visited[i] = false;
+
+  // Do DFS for reversed graph starting from first vertex.
+  //  Starting Vertex must be same starting point of first DFS
+  gr.DFSUtil(0, visited);
+
+  // If all vertices are not visited in second DFS, then
+  // return false
+  for (int i = 0; i < V; i++)
+    if (visited[i] == false)
+      return false;
+
+  return true;
 }
