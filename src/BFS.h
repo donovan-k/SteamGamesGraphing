@@ -8,5 +8,5 @@ class BFSg
   list<int> *al;//points to adjacency lists
 public:
   BFSg(Graph * graphx);//constructor
-  void BFS(int s);//prints BFS traversal
+  void BFS(int s, vector<Game> games);//prints BFS traversal
 };
