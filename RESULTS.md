@@ -23,9 +23,9 @@ provide the twenty titles which are closest to the inputted, as determined by th
 and strongly connected components portions. 
 
 ### Kosaraju's Algorithm for Strongly Connected Components
-This algorithm was used in the process of genre creation. Since our graph is created from a vector of Game objects with
-edges determined using the similar class, we can simply use the algorithm to find the strongly connected components of
-specific indices from the vector of Game objects. This then allows us to separate games into similar game genres.
+This algorithm was used in the process of genre creation. Since our graph is created from a vector of Game objects 
+with edges determined using the similar class, we can simply use the algorithm to find the strongly connected 
+components of specific indices from the vector of Game objects. This then allows us to separate games into similar game genres.
 The output of the function that we used (getSCCs) gives us a 2D vector of integers that represent the index of a
 specific game from the vector of Game objects, with each inside vector being a separate genre of games. 
 
