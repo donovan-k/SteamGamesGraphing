@@ -7,6 +7,7 @@ BFSg::BFSg(Graph *graphx) {
   vert = graphx->size(); // sets the size of the graph
   al = graphx->getAdjacencyList();
 }
+
 std::vector<int> BFSg::BFS(int index, int size) { // visits each vertex
   std::vector<int> result;
   result.reserve(size);
