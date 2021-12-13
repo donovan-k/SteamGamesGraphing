@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
       std::cout << "\t\t" << graph.getGame(index).name << "\n";
     }
   }
-
+  
   std::string query;
   while (true) {
     std::cout
