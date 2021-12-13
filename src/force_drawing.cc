@@ -95,8 +95,8 @@ ForceDirectedDraw::computePositions(int iterations) {
           disp.second / disp_mag,
       };
 
-      position[v].first += disp_norm.first * temp;
-      position[v].second += disp_norm.second * temp;
+      position[v].first += disp_norm.first * std::min(disp_mag / 2.0f, temp);
+      position[v].second += disp_norm.second * std::min(disp_mag / 2.0f, temp);
 
       // keep the vertex in bounds
       position[v] = {
@@ -115,22 +115,25 @@ ForceDirectedDraw::computePositions(int iterations) {
 
 cs225::PNG ForceDirectedDraw::drawPositions(
     const std::vector<std::pair<float, float>> &positions) {
-  static const float DOT_SIZE = float(std::min(width_, height_)) / 100.0;
   cs225::PNG png(width_, height_);
 
+  const std::list<int> *adj_list = graph_->getAdjacencyList();
   // go through each position and color that pixel a random color
   static std::random_device rd;
   static std::default_random_engine rng(rd());
   static std::uniform_real_distribution<> dist(0, 360);
-  for (const auto &pos : positions) {
+
+  for (int v = 0; v < positions.size(); v++) {
+    const auto &pos = positions[v];
     const int hue = int(dist(rng));
-    const int minx = (width_ / 2.0 + pos.first) - DOT_SIZE / 2.0;
-    const int miny = (height_ / 2.0 + pos.second) - DOT_SIZE / 2.0;
-    for (int x = minx; x < minx + DOT_SIZE; x++) {
+    const float dot_size = 1.0 + std::sqrt(float(adj_list[v].size()));
+    const int minx = int((width_ / 2.0f + pos.first) - dot_size / 2.0f);
+    const int miny = int((height_ / 2.0f + pos.second) - dot_size / 2.0f);
+    for (int x = minx; x < minx + dot_size; x++) {
       if (x < 0 || x >= width_) {
         continue;
       }
-      for (int y = miny; y < miny + DOT_SIZE; y++) {
+      for (int y = miny; y < miny + dot_size; y++) {
         if (y < 0 || y >= height_) {
           continue;
         }
