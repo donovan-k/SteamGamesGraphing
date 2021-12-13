@@ -23,4 +23,4 @@
 - Wrote force directed drawing class which draws an interpretation of the graph. (Donovan)
 - Update BFS to work with main to print recommendations. (Stan)
 - Implemented main and debugged functions. (Alex)
-  
+- Created video presentation and final deliverables (Everybody)
