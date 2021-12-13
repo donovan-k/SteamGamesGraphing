@@ -15,5 +15,4 @@
  */
 bool gamesSimilar(const Game &game1, const Game &game2, float threshold);
 
-
 #endif // SIMILAR_H
