@@ -42,3 +42,5 @@ This process gave great insight in not only the creation processes of programmin
 structures, but the intricacies of group work. Furthermore, this exercise proved the methods
 used were functional in a practical application. The outputs work, and a force directed graph
 is generated, which proves the efficacy of our solution.
+For a full presentation, the video can be found here:
+https://drive.google.com/file/d/1E1Szs0MkrRyXQDGlFdn89EKZdH8ZurCc/view?usp=sharing
