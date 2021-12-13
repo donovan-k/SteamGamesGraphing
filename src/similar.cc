@@ -34,3 +34,4 @@ bool gamesSimilar(const Game &game1, const Game &game2,
 
   return (float(score) / float(total)) > threshold;
 }
+
