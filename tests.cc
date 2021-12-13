@@ -19,9 +19,6 @@ bool testSCCs() {
   g.addEdge(0, 3);
   g.addEdge(3, 4);
 
-  // std::cout << "Following are strongly connected components in "
-  // "given graph \n";
-  // // g.printSCCs();
   std::vector<std::vector<int>> SCCs = g.getSCCs();
 
   std::vector<int> test_vec;
@@ -162,7 +159,7 @@ int main(int argc, char *argv[]) {
     failed_cases++;
   }
 
-  // test the strongly connected components
+  // test if getSCCs returns the correct strongly connected components
   bool test_case_SCC = testSCCs();
   if (test_case_SCC) {
     passed_cases++;
@@ -171,7 +168,7 @@ int main(int argc, char *argv[]) {
     failed_cases++;
     std::cout << "test_case_SCC FAILED" << std::endl;
   }
-
+  // tests if a certain graph is a strongly connected component
   bool test_case_isSCC = testStronglyConnected();
   if (test_case_isSCC) {
     passed_cases++;
