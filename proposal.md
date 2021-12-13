@@ -30,8 +30,6 @@ BFS - BFS is a search where all nodes in a given 'layer' are searched before mov
 Strongly (or almost) connected components - Performs a search, reverses the graph, and reperforms a search to determine which components are strongly connected. Takes a graph as input and outputs a strongly connected graph. Strongly connected components have, ideally, O(V+E) time complexity as well.
 Force Directed Graphing - Force Directed Graphing receives data, and uses it to generate visually appealing graphs. The ideal time complexity for Force Directed Graphing should also be O(V+E).
 
-
-
 ## Timeline
 Data acquistion/processing- Completed at least by the end of the first week
 > Algorithms and functionality-
