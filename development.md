@@ -16,6 +16,7 @@
 - Set things up for writing and running tests (Alex Liao)
 - Get testing done for similarity (Donovan)
 - Get testing done for SCC (PJ)
+- Made BFS more specific, updated testing functions. (Stan)
 
 ### Week 4
 - Updated Graph.cc and Graph.h files to create a getSCC function to retrieve the indices for finding Strongly Connected Components (PJ)
