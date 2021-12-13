@@ -21,7 +21,6 @@ traversal to output the twenty most similar games.
 ## Individual discussions
 
 ### BFS Traversal
-
 The Breadth First Search algorithm was used in the process of game
 recommendation.  The BFS files contained the ability to traverse a
 strongly connected adjency list to provide the twenty titles which are
