@@ -21,6 +21,7 @@ public:
 
 private:
   Graph *const graph_;
+  
   int width_, height_;
 
   // finds the difference/unit vector of 2 vectors (unit when unit == true)
