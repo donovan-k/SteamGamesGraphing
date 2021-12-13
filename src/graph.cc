@@ -49,7 +49,6 @@ void Graph::DFSUtil(int v, std::vector<bool> &visited,
   // Mark the current node as visited and print it
   visited[v] = true;
   component.push_back(v);
-  // cout << v << " ";
 
   // Recur for all the vertices adjacent to this vertex
   std::list<int>::iterator i;
@@ -154,7 +153,6 @@ std::vector<std::vector<int>> Graph::getSCCs() {
       std::vector<int> current_component;
       gr.DFSUtil(v, visited, current_component);
       SCCs.push_back(current_component);
-      // cout << endl;
     }
   }
   return SCCs;
@@ -180,13 +178,6 @@ std::vector<Game> Graph::getSimilarGames(int ind) const {
 
   return similar_games;
 }
-
-// list<int> Graph::getSimilarGames(int ind) const {
-//   // get the list of siimlar games
-//   list<int> similar_indexes = adj[ind];
-
-//   return similar_indexes;
-// }
 
 bool Graph::areSimilar(int i, int j) const {
   std::list<int> similar_games = adj[i];
