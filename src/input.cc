@@ -21,7 +21,6 @@ std::vector<std::string> lex_csv(const std::string& s) {
   }
   return result;
 }
-
 Game parse_game(const std::string &s) {
   Game game;
   std::deque<char> buffer(s.begin(), s.end());
