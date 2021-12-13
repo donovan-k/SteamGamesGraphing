@@ -26,5 +26,4 @@ struct Game {
   std::string original_price;
   std::string discount_price;
 };
-
 #endif // GAME_H
