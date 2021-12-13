@@ -42,7 +42,7 @@ public:
   // components
   void printSCCs();
 
-  /* Function that returns a vector of vectors of strongly connected integers */
+  // Function that returns a vector of vectors of strongly connected integers
   std::vector<std::vector<int>> getSCCs();
 
   // Function that returns reverse (or transpose) of this graph
