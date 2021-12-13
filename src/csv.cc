@@ -51,6 +51,5 @@ void lex_escape(std::deque<char> &buffer, std::deque<char> &output) {
 
   const char c = buffer.front();
   buffer.pop_front();
-
   output.push_front(c);
 }
