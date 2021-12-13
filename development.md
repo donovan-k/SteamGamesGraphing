@@ -20,4 +20,5 @@
 ### Week 4
 - Updated Graph.cc and Graph.h files to create a getSCC function to retrieve the indices for finding Strongly Connected Components (PJ)
 - Wrote force directed drawing class which draws an interpretation of the graph. (Donovan)
+- Update BFS to work with main to print recommendations. (Stan)
   
