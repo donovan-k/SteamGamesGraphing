@@ -8,6 +8,9 @@ using an adjacency list, and there is a traversal of the games
 structure, a strongly connected components algorithm, and a force
 directed algorithm used to draw an interpretation of the graph.
 
+## Force Directed Drawing of Steam Games
+![image](https://user-images.githubusercontent.com/48697778/166484104-79b72f7c-f3e2-4f3a-b645-66f1552c5c70.png)
+
 ## Location of code, resources, and presentation
 The location of the code is all in the src folder. The data set we
 used were parts of a kaggle data set found at the site
